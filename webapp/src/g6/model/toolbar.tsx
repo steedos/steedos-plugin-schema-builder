@@ -1,7 +1,7 @@
 
 import { Button, Icon, Modal, Popover, Radio, Select, Switch, Tooltip } from 'antd'
 const RadioGroup = Radio.Group
-import { FileMarkdownOutlined, UnlockOutlined, LockOutlined, ZoomOutOutlined, ZoomInOutlined, BorderOutlined, ArrowUpOutlined, ArrowDownOutlined, ArrowLeftOutlined, ArrowRightOutlined, RetweetOutlined } from '@ant-design/icons'
+import { FileMarkdownOutlined, FileImageOutlined,  UnlockOutlined, LockOutlined, ZoomOutOutlined, ZoomInOutlined, BorderOutlined, ArrowUpOutlined, ArrowDownOutlined, ArrowLeftOutlined, ArrowRightOutlined, RetweetOutlined } from '@ant-design/icons'
 import classNames from 'classnames'
 import { useDispatch, useSelector } from '../../hook'
 import React, { useCallback, useEffect, useRef, useState } from 'react' // import { exitFullscreen, launchIntoFullscreen } from './../util'
@@ -24,7 +24,8 @@ const IconRenders = {
   'retweet': <RetweetOutlined />,
   'pdm' : <FileMarkdownOutlined />,
   'lock': <LockOutlined />,
-  'unlock': <UnlockOutlined />
+  'unlock': <UnlockOutlined />,
+  'image':<FileImageOutlined />
 
 }
 
@@ -146,6 +147,14 @@ const BaseCommandList: any[] = [
   click: (_, graph) => {
     graph.translate(100, 0)
     graph.paint()
+  },
+},
+ {
+  title: intl.get('导出图片').d('导出图片'),
+  key: 'export-image',
+  icon: 'image',
+  click: (toolBarCommand) => {
+    toolBarCommand && toolBarCommand('export-image')
   },
 },
 

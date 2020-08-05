@@ -13,6 +13,7 @@ export const render = (container, data, props, setZoom) => {
   const { styleConfig } = props
   const nodes = data.nodes
   let graph = new G6.Graph({
+    // renderer:"svg",
     // groupByTypes: false,
     fitView: true,
     container,
@@ -40,6 +41,10 @@ export const render = (container, data, props, setZoom) => {
         //   strokeOpacity: 0, fillOpacity: 0
         // }
       }, 
+      // {
+      //   type: 'activate-relations',
+      //   resetSelected: true,
+      // },
      ],
     },
     plugins: [
@@ -219,6 +224,7 @@ export const render = (container, data, props, setZoom) => {
   })
   graph.on('beforepaint', _.throttle(() => {
     // alert()
+    const isExporting = graph['isExporting']
     const gWidth  = graph.get('width')
     const gHeight = graph.get('height')
     // 获取视窗左上角对应画布的坐标点
@@ -231,6 +237,7 @@ export const render = (container, data, props, setZoom) => {
         node.getContainer().hide()
         return
       }
+      if(isExporting) return
       const {
         config,
         data: _data,
@@ -255,6 +262,7 @@ export const render = (container, data, props, setZoom) => {
         edge.hide()
         return
       }
+      if(isExporting) return
 
       if (!sourceNode.getContainer().get('visible') && !targetNode.getContainer().get('visible')) {
         edge.hide()

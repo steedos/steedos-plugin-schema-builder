@@ -1,5 +1,5 @@
 import dva from 'dva'
-import React, { useMemo } from 'react'
+import React, { useMemo, useCallback } from 'react'
 import { useRequest } from 'ahooks';
 import Page , { DvaModel } from '../src'
 import getAllModelsTest from './g6-test/mock/model-test'
@@ -13,17 +13,22 @@ const ErdPdmPage =  (props) => {
   const { data, error, loading } = useRequest('/api/v4/objects');
   // alert(JSON.stringify(data))
    const { getModels, getModules } = useMemo(() => ({
-    // getModels: async () =>  ({ res: toERDModels(data) }),
-    // getModules: async () => ({ res: toModules() }),
-    getModels: async () =>  ({ res: getAllModelsTest }),
-    getModules: async () => ({ res: getAllModulesTest }),
+    getModels: async () =>  ({ res: toERDModels(data) }),
+    getModules: async () => ({ res: toModules() }),
+    // getModels: async () =>  ({ res: getAllModelsTest }),
+    // getModules: async () => ({ res: getAllModulesTest }),
    }), [data])
+
+   const openModelFun = useCallback((args)=>{
+     window.open(`/app/admin/objects/view/${args.model}`,'model')
+   } , [])
     
    if(!data) return null
    return (
    <Page {...props}
      getModels={getModels}
      getModules={getModules}
+     modelEditFun={openModelFun}
      isFullScreen
        />
    )

@@ -109,6 +109,28 @@ export default (
         }
       // }
 
+      if(name === 'export-image') {
+        const newZoom = 100
+        _graph.isExporting = true
+        _graph.getNodes().filter((a) => !a.isSys).forEach((node) => {
+          node.getContainer().show()
+             _graph.updateItem(node, {
+                isKeySharp: false,
+                isCardSharp: false ,
+              })
+        })
+        const gwidth = _graph.get('width')
+        const gheight = _graph.get('height')
+        const point = _graph.getCanvasByPoint(gwidth / 2, gheight / 2)
+        // graph.moveTo({x: point.x , y : point.y})
+        _graph.zoomTo(newZoom / 100, {x: point.x , y : point.y})
+        _graph.paint()
+        _graph.downloadFullImage('模型图', undefined, {
+          backgroundColor: 'rgb(245, 247, 255)',
+        })
+        _graph.isExporting = undefined
+      }
+
       if (name === 'min-zoom') {
         const gwidth = _graph.get('width')
         const gheight = _graph.get('height')
