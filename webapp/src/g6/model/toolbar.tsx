@@ -78,15 +78,15 @@ const BaseCommandList: any[] = [
   click: ()=>{}
 },
 
-{
-  title: intl.get('导入pdm文件').d('导入pdm文件'),
-  key: 'pdm',
-  icon: 'pdm',
-  render: () => {
-  return <Pdm><FileMarkdownOutlined /></Pdm>
-  },
-  click: ()=>{}
-},
+// {
+//   title: intl.get('导入pdm文件').d('导入pdm文件'),
+//   key: 'pdm',
+//   icon: 'pdm',
+//   render: () => {
+//   return <Pdm><FileMarkdownOutlined /></Pdm>
+//   },
+//   click: ()=>{}
+// },
 
 {
   title: intl.get('全景').d('全景'),
@@ -159,25 +159,25 @@ const BaseCommandList: any[] = [
 //   },
 // },
 
-{
-  title: intl.get('重新排列').d('重新排列'),
-  key: 'resetLayout',
-  icon: 'retweet',
-  click: (toolBarCommand) => {
-    confirm({
-      title: '重新排列',
-      content: '重新排列后，模型的位置重新排列 ？',
-      onOk() {
-        toolBarCommand && toolBarCommand('resetLayout') // toolBarCommand && toolBarCommand('keySharp', { isKeysharp: false})
-      },
-      onCancel() {
-        console.log('Cancel')
-      },
-    })
+// {
+//   title: intl.get('重新排列').d('重新排列'),
+//   key: 'resetLayout',
+//   icon: 'retweet',
+//   click: (toolBarCommand) => {
+//     confirm({
+//       title: '重新排列',
+//       content: '重新排列后，模型的位置重新排列 ？',
+//       onOk() {
+//         toolBarCommand && toolBarCommand('resetLayout') // toolBarCommand && toolBarCommand('keySharp', { isKeysharp: false})
+//       },
+//       onCancel() {
+//         console.log('Cancel')
+//       },
+//     })
 
-  },
+//   },
 
-},
+// },
 
 // {
 //   title: intl.get('上一步').d('上一步'),
@@ -277,11 +277,11 @@ export default (({
   return (
   <div className='console-erd-toolbar'>
     <div className='right'>
-    <Tooltip title={!isArrangeLayout ? intl.get('模型字段关联').d('模型字段关联') : intl.get('聚合关联').d('聚合关联') } >
+    {/* <Tooltip title={!isArrangeLayout ? intl.get('模型字段关联').d('模型字段关联') : intl.get('聚合关联').d('聚合关联') } >
       <span className='command-btn zoomleft'  >
         <Switch checkedChildren='聚合' unCheckedChildren='字段' size='small' onChange={arrangeLayout} checked={isArrangeLayout} />
         </span>
-        </Tooltip>
+        </Tooltip> */}
     <Tooltip title={intl.get('放大').d('放大')} ><span className='command-btn zoomleft' onClick={zoomInClick.bind(this, { toolBarCommand, graph, update })} ><ZoomInOutlined /></span></Tooltip>
     <span className='zoomNum noselect'>
     <Popover footer={false} content={<RadioGroup value={zoomNum * 2} onChange={zoomChange} >

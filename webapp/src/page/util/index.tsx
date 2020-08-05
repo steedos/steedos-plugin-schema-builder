@@ -199,8 +199,8 @@ export const createLinks = (models, nodes, checkedKeys, styleConfig) => {
               // color: 'black',
               style: styleConfig.default.edge,
               styleConfig,
-              label: field.type,
-              labelAutoRotate: true,
+              // label: model.key === field.typeMeta.relationModel ? undefined : field.type,
+              // labelAutoRotate: true,
               loopCfg: {
                 // position: 'top',
                 clockwise: true, // dist: 200,

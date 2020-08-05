@@ -23,6 +23,7 @@ export type field = {
 export type ItoErd = (models: models)=> IModel[]
 
 export const toERDModels : ItoErd  = (models: models) =>{
+    
     return models?.value.map(v => {
           return {
               fields : Object.entries(v.fields).filter(([_,v]) => !v.is_system ).map(([_,v])=> {
