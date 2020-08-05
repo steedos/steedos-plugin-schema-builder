@@ -1,3 +1,4 @@
+import _ from 'lodash'
 export const layouting = (sss, arg) => {
   return { ...sss, layouting: arg.layouting }
 }
@@ -74,5 +75,37 @@ export const search = (ss, { text }) => {
   return { ...ss,
            search: text,
            currentModel: null,
+  }
+}
+
+export const onCheckByModule = (ss, { checkKeys, moduleKey}) => {
+  const modelsElse = ss.models.filter((a) =>  !!moduleKey && ((a.moduleKey) !== moduleKey)).map(a=>'model-'+a.key)
+  const modelFIlterElse = _.intersection(ss.checkedKeys, modelsElse)
+  const checkedKeys = [...modelFIlterElse, ...checkKeys]
+  return { ...ss,
+    checkedKeys,
+    currentModel: checkedKeys.find(k => k === ss.currentModel) ? ss.currentModel : null,
+  }
+}
+
+export const onCheckByModuleAll = (ss, { moduleKey }) => {
+  const modelsElse = ss.models.filter((a) =>  !!moduleKey && ((a.moduleKey) !== moduleKey)).map(a=>'model-'+a.key)
+  const modelFIlterElse = _.intersection(ss.checkedKeys, modelsElse)
+  const modelsKeys = ss.models.filter((a) =>  !moduleKey || ((a.moduleKey) === moduleKey)).map(a=>'model-'+a.key)
+  const checkedKeys = [...modelFIlterElse, ...modelsKeys]
+  return { ...ss,
+    checkedKeys,
+    currentModel: checkedKeys.find(k => k === ss.currentModel) ? ss.currentModel : null,
+  }
+}
+
+export const onCheckByModuleAllCancle = (ss, { moduleKey }) => {
+  const modelsElse = ss.models.filter((a) =>  !!moduleKey && ((a.moduleKey) !== moduleKey)).map(a=>'model-'+a.key)
+  const modelFIlterElse = _.intersection(ss.checkedKeys, modelsElse)
+  // const modelsKeys = ss.models.filter((a) =>  !moduleKey || ((a.moduleKey) === moduleKey)).map(a=>'model-'+a.key)
+  const checkedKeys = [...modelFIlterElse]
+  return { ...ss,
+    checkedKeys,
+    currentModel: checkedKeys.find(k => k === ss.currentModel) ? ss.currentModel : null,
   }
 }

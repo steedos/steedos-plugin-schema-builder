@@ -1,5 +1,5 @@
 
-import { Input, Tree, Select } from 'antd'
+import { Input, Tree, Select, Button, Divider } from 'antd'
 import { useDispatch, useSelector } from '../../hook'
 import _ from 'lodash'
 import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -121,6 +121,21 @@ export default forwardRef((props: any, ref) => {
     </Select>
   );
 
+  const checkAllFun = () => {
+    // alert(models.length)
+    dispatch({
+      type: `${namespace}/onCheckByModuleAll`,
+      moduleKey: moduleValue,
+    })
+  }
+
+  const checkAllCancleFun = () => {
+    // alert(models.length)
+    dispatch({
+      type: `${namespace}/onCheckByModuleAllCancle`,
+      moduleKey: moduleValue,
+    })
+  }
   
 
   return useMemo(() => (
@@ -134,7 +149,11 @@ export default forwardRef((props: any, ref) => {
           <NaviInput allowClear size="small"  onChange={(e) => {searchOnChange(e.target.value) }} placeholder={intl.get('模型筛选').d('模型筛选')}  addonAfter={selectAfter} />
           {/* <Button className='console-erd-add' type='text' icon='plus'  onClick={() => { toolBarCommand('insertModel') }} /> */}
           </div>
-
+          <div className='console-erd-search btns'>
+            <Button size="small" type="link" onClick={checkAllFun} >选择所有</Button>
+            {/* <Divider type="vertical" /> */}
+            <Button size="small" type="link" onClick={checkAllCancleFun}>清除所有</Button>
+          </div>
           </div>
           <div className='navitree-warp'>
       <Scroll 
@@ -147,8 +166,9 @@ export default forwardRef((props: any, ref) => {
         >
         <NaviTree className='console-models-tree-tree'  ref={ref} expandedKeys={store.expandedKeys} onCheck={(checkKeys) => {
       dispatch({
-        type: `${namespace}/onCheck`,
+        type: `${namespace}/onCheckByModule`,
         checkKeys,
+        moduleKey: moduleValue
       })
     }} onExpand={(_, {
       expanded,

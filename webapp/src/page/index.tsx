@@ -313,7 +313,7 @@ export default (
         <ModelNavi
           namespace={namespace}
           Tree={props.Tree}
-          bottomHeight={props.bottomHeight || 50}
+          bottomHeight={props.bottomHeight || 78}
           Input={props.Input}
           Pdm={Pdm}
           toolBarCommand={toolBarCommand}
