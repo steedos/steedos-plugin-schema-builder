@@ -193,7 +193,7 @@ export default forwardRef((props: any, ref) => {
             }> */}
                 {store.models.filter((m) =>  !m.delete && (!moduleValue || m.moduleKey === moduleValue)).filter((m) => !searchText || m.name.indexOf(searchText) >= 0).map((m) => {
               return <TreeNode title={<OptionBuilder data={{
-                title: renderTitle(m.name, store.search),
+                title: renderTitle(m.name, searchText),
                 options: [{
                   title: <span> {intl.get('定位模型').d('定位模型')}</span>,
                   click: () => {
