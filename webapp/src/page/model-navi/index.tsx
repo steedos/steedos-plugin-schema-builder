@@ -1,5 +1,5 @@
 
-import { Input, Tree } from 'antd'
+import { Input, Tree, Select } from 'antd'
 import { useDispatch, useSelector } from '../../hook'
 import _ from 'lodash'
 import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -8,6 +8,7 @@ import Scroll from 'react-custom-scrollbars'
 import { useLoadData } from '../hooks/callback'
 import './style.scss'
 import intl from './../../g6/util/intel'
+const { Option } = Select;
 
 const renderLabel = (isSpec, beforeStr, afterStr, searchValue) => {
 
@@ -90,7 +91,7 @@ export default forwardRef((props: any, ref) => {
   const fun = (value) => {
     // console.log(e)
     setSearchText(value)
-    searchDispatch(value)
+    // searchDispatch(value)
 
    }
 
@@ -105,6 +106,23 @@ export default forwardRef((props: any, ref) => {
     OptionBuilder,
   } = NaviTree
 
+  const [moduleValue, setModuleValue] = useState('')
+  const changeModuleValue = useCallback((val)=>{setModuleValue(val)},[])
+
+  const selectAfter = (
+    <Select defaultValue={moduleValue} value={moduleValue}  className="select-after" onChange={changeModuleValue}>
+      {
+        [
+          <Option value={''}>所有</Option>,
+          ...store.modules.map((module) => {
+        return  <Option value={module.key}>{module.name}</Option>
+        })]
+      }
+    </Select>
+  );
+
+  
+
   return useMemo(() => (
   <div className='console-models-tree' style={{paddingBottom: props.bottomHeight}} ref={(refDiv) => {
     consoleModelsRef.current = refDiv
@@ -113,7 +131,7 @@ export default forwardRef((props: any, ref) => {
 
         <div className='console-erd-search'>
 
-          <NaviInput allowClear size="small"  onChange={(e) => {searchOnChange(e.target.value) }} placeholder={intl.get('模型筛选').d('模型筛选')} />
+          <NaviInput allowClear size="small"  onChange={(e) => {searchOnChange(e.target.value) }} placeholder={intl.get('模型筛选').d('模型筛选')}  addonAfter={selectAfter} />
           {/* <Button className='console-erd-add' type='text' icon='plus'  onClick={() => { toolBarCommand('insertModel') }} /> */}
           </div>
 
@@ -151,10 +169,10 @@ export default forwardRef((props: any, ref) => {
       })
 
     }} checkedKeys={store.checkedKeys}>
-        <TreeNode key='allmodels' title={<OptionBuilder data={{
+        {/* <TreeNode key='allmodels' title={<OptionBuilder data={{
         title: intl.get('所有模型').d('所有模型'),
-      }} />}>
-         {store.modules.map((module) => {
+      }} />}> */}
+         {/* {store.modules.map((module) => {
           return <TreeNode key={'module-' + module.key} title={
             <OptionBuilder data={{
               title:  renderTitle(module.name, store.search),
@@ -172,8 +190,8 @@ export default forwardRef((props: any, ref) => {
               ],
              }} />
 
-            }>
-                {store.models.filter((m) => m.moduleKey === module.key && !m.delete).filter((m) => !store.search || m.name.indexOf(store.search) >= 0).map((m) => {
+            }> */}
+                {store.models.filter((m) =>  !m.delete && (!moduleValue || m.moduleKey === moduleValue)).filter((m) => !searchText || m.name.indexOf(searchText) >= 0).map((m) => {
               return <TreeNode title={<OptionBuilder data={{
                 title: renderTitle(m.name, store.search),
                 options: [{
@@ -220,13 +238,13 @@ export default forwardRef((props: any, ref) => {
               ],
               }} />} data-key={'model-' + m.key} key={'model-' + m.key} isLeaf />
             })}
-              </TreeNode>
+              {/* </TreeNode> */}
         })}
-        </TreeNode>
+        {/* </TreeNode> */}
       </NaviTree>
       </Scroll>
       </div>
-  </div>), [store.checkedKeys, store.currentModel, store.expandedKeys, store.modules, store.models, store.search])
+  </div>), [store.checkedKeys, store.currentModel, store.expandedKeys, store.modules, store.models, searchText, moduleValue])
 })
 
 const useLocal = ({
