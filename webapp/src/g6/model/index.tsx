@@ -8,6 +8,7 @@ import Toolbar from './toolbar'
 import { useSelector } from '../../hook'
 // import intl from './../util/intel'
 const MINZOOM = 0.01
+const MAXZOOM = 1.1
 export const render = (container, data, props, setZoom, lockMinZoom) => {
   let width = props.width
   let height = props.height
@@ -36,7 +37,7 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
          'drag-canvas', {
         type: 'zoom-canvas',
         minZoom: MINZOOM,
-        maxZoom: 2.1,
+        maxZoom: MAXZOOM,
       },
       {
         type: 'drag-node',
@@ -304,7 +305,7 @@ const useUpdateItem = ({currentModel, graph}) => {
             const nodeId = nodeModel.id
             const data = nodeModel ? nodeModel.data : undefined
             const isNoModule =  (currentModel || '').indexOf('module-') >= 0 &&   ((data && data.moduleKey) !== currentModel)
-            const isKeySharp = zoomNum  <= 0.30 * 2
+            const isKeySharp = zoomNum  <= 0.20 * 2
             const isCardSharp =  zoomNum <= 0.05 * 2
             // alert(isKeySharp)
             graph.updateItem(node, {

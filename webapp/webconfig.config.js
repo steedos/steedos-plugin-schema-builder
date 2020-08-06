@@ -33,7 +33,7 @@ module.exports = ConsoleWebpack({
       //   // }
       // },
       "*": {
-        target: "http://127.0.0.1:5000",
+        target: "http://zyking.xyz:5080",
         // target: 'http://30.43.85.42/',
         secure: false,
         changeOrigin: true,

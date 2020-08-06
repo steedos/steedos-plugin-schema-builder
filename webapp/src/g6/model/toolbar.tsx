@@ -307,13 +307,13 @@ export default (({
         </Tooltip>
     <Tooltip title={intl.get('放大').d('放大')} ><span className='command-btn zoomleft' onClick={zoomInClick.bind(this, { toolBarCommand, graph, update })} ><ZoomInOutlined /></span></Tooltip>
     <span className='zoomNum noselect'>
-    <Popover footer={false} content={<RadioGroup value={zoomNum * 2} onChange={zoomChange} >
+    {/* <Popover footer={false} content={<RadioGroup value={zoomNum * 2} onChange={zoomChange} >
         <Radio value={200}>100%</Radio>
         <Radio value={100}>50%</Radio>
         <Radio value={20}>10%</Radio>
-      </RadioGroup>} placement='bottom' >
-      {graph && `${zoomNum}%` }
-      </Popover>
+      </RadioGroup>} placement='bottom' > */}
+      {graph && `${zoomNum * 2 > 200 ? 100 :(zoomNum * 2) }%` }
+      {/* </Popover> */}
       </span>
     <Tooltip title={intl.get('缩小').d('缩小')} ><span className='command-btn' onClick={zoomOutClick.bind(this, { toolBarCommand, graph, update })}><ZoomOutOutlined /></span></Tooltip>
 

@@ -1,6 +1,7 @@
-import dva from 'dva'
+// import dva from 'dva'
 import React, { useMemo, useCallback } from 'react'
 import { useRequest } from 'ahooks';
+import { Skeleton, message } from 'antd'
 import Page , { DvaModel } from '../src'
 import getAllModelsTest from './g6-test/mock/model-test'
 import getAllModulesTest from './g6-test/mock/module-test'
@@ -19,11 +20,17 @@ const ErdPdmPage =  (props) => {
     // getModules: async () => ({ res: getAllModulesTest }),
    }), [data])
 
+   if(error?.message === 'Unauthorized') {
+    //  alert(window.location.href)
+     message.error('请登录');
+     window.location.href = '/accounts/a/#/login?redirect_uri='+ encodeURI(window.location.href)
+   }
+
    const openModelFun = useCallback((args)=>{
      window.open(`/app/admin/objects/view/${args.model}`,'model')
    } , [])
     
-   if(!data) return null
+   if(!data) return <Skeleton avatar active paragraph={{ rows: 20 }} />
    return (
    <Page {...props}
      getModels={getModels}
