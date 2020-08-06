@@ -37,6 +37,7 @@ export  const initStyle = ({primaryColor}) => {
       edge: {
         lineWidth: 2,
         size: 2,
+        lineAppendWidth: 4,
         endArrow: {
           path: 'M 6,0 L -6,-6 L -3,0 L -6,6 Z',
           d: 4,
