@@ -148,6 +148,7 @@ export interface IField {
 const Relation = {
   ToOne: '1:1',
   ToMany: '1:n',
+  lookup:'lookup'
 }
 
 const getLength  = (length) => {
@@ -196,7 +197,9 @@ export const register = ({ colors }) => {
 
 
     labelAutoRotate: true,
-    
+    // update(a,b,c) {
+    //   console.log(a,b,c)
+    // }
     update: null,
   }, 'cubic')
 
@@ -417,6 +420,8 @@ export const register = ({ colors }) => {
         data,
       } = cfg
 
+      data.aggregateRoot = true
+
       const bg = data.aggregateRoot ? colors.blue : colors.head
       const font = data.aggregateRoot ? colors.white : colors.blue
       const mFront = data.aggregateRoot ? colors.white : colors.black
@@ -495,32 +500,32 @@ export const register = ({ colors }) => {
         },
       })
 
-      cfg.data.aggregateModelKey && group.addShape('text', {
-        visible: cfg.data.aggregateModelKey,
-        name: data.key,
-        fontFamily: '',
-        draggable: true,
-        attrs: {
-          fontFamily: 'iconFont',
-          x: (config.width / 2) - 100,
-          y: -(getLength(data.fields.length) * config.fieldHeight / 2),
-          text: '聚合关系',
-          arg: cfg.data.aggregateModelKey,
-          // text: cfg.data.aggregateModelKey,
-          // text: '\ue6b2',
-          id: 'headerlabel1',
-          cursor: 'pointer',
-          click: 'arrangeShow',
-          // cursor: 'move',
-          fontSize: config.labelSize,
-          // opacity: !cfg.isKeySharp ? 1 : 0,
-          className: 'headerlabel',
-          textBaseline: 'middle',
-          textAlign: 'left',
-          // radius: [2, 4],
-          fill: nodeColors.font,
-        },
-      })
+      // cfg.data.aggregateModelKey && group.addShape('text', {
+      //   visible: cfg.data.aggregateModelKey,
+      //   name: data.key,
+      //   fontFamily: '',
+      //   draggable: true,
+      //   attrs: {
+      //     fontFamily: 'iconFont',
+      //     x: (config.width / 2) - 100,
+      //     y: -(getLength(data.fields.length) * config.fieldHeight / 2),
+      //     text: '聚合关系',
+      //     arg: cfg.data.aggregateModelKey,
+      //     // text: cfg.data.aggregateModelKey,
+      //     // text: '\ue6b2',
+      //     id: 'headerlabel1',
+      //     cursor: 'pointer',
+      //     click: 'arrangeShow',
+      //     // cursor: 'move',
+      //     fontSize: config.labelSize,
+      //     // opacity: !cfg.isKeySharp ? 1 : 0,
+      //     className: 'headerlabel',
+      //     textBaseline: 'middle',
+      //     textAlign: 'left',
+      //     // radius: [2, 4],
+      //     fill: nodeColors.font,
+      //   },
+      // })
 
       group.addShape('text', {
         visible: !cfg.isKeySharp,
@@ -657,7 +662,10 @@ export const register = ({ colors }) => {
           relationModel,
           type,
           isForeign,
-        } = field
+          required,
+        } = field 
+
+        const hasCircle = isForeign || required
 
         const y = -((config.headerHeight + getLength(data.fields.length) * config.fieldHeight) / 2) + config.headerHeight + config.fieldHeight * index + config.fieldHeight / 2  - 2
         group.addShape('rect', {
@@ -739,7 +747,7 @@ export const register = ({ colors }) => {
             // fill: field.isForeign ?  '#dee1e6' : 'white',
             // ...cfg.style || {},
             // fill: field.isForeign ?  '#dee1e6' : 'white',
-            fill: colors.blue,
+            fill:  required ? 'red' :  '#dee1e6',
             cursor: 'move',
             // ...cfg.style || {},
           },
@@ -766,12 +774,13 @@ export const register = ({ colors }) => {
             textAlign: 'start',
             // opacity: !cfg.isKeySharp ? 1 : 0,
             // radius: [2, 4],
-            fill: isForeign ? colors.blue : 'rgba(0,0,0,0.60)', // fill: 'rgb(153,153,153)',
+            fill: required ? 'red' : ('rgba(0,0,0,0.60)'), // fill: 'rgb(153,153,153)',
             // fill: field.isForeign ?   'black' : 'black',
 
           },
         })
-
+        const RelationType = Relation[field.type] || field.type
+        const text = isForeign ?( field.type && RelationType ? `${RelationType}(${relationModel ||''})` : relationModel) : `${field.type || ''}`
         group.addShape('text', {
           visible: !cfg.isKeySharp,
           name: field.key,
@@ -782,7 +791,7 @@ export const register = ({ colors }) => {
 
             // click: 'fieldEdit',
             y: -((config.headerHeight + getLength(data.fields.length) * config.fieldHeight) / 2) + config.headerHeight + config.fieldHeight * index + config.fieldHeight / 2,
-            text: isForeign ?( field.type && Relation[field.type] ? `${relationModel}(${Relation[field.type] ||''})` : relationModel) : `[${field.type || ''}]`,
+            text,
             id: 'field',
             textBaseline: 'middle',
             fieldName: field.key,
@@ -794,7 +803,7 @@ export const register = ({ colors }) => {
             // opacity: !cfg.isKeySharp ? 1 : 0,
             // radius: [2, 4],
             // fill: field.isForeign ?   'black' : 'black',
-            fill: isForeign ? colors.blue : 'rgba(0,0,0,0.30)',
+            fill: required ? 'red' : ('rgba(0,0,0,0.30)'),
           },
         })
         // group.addShape('text', {
@@ -847,7 +856,7 @@ export const register = ({ colors }) => {
             // fill: field.isForeign ?  '#dee1e6' : 'white',
             // ...cfg.style || {},
             // fill: field.isForeign ?  '#dee1e6' : 'white',
-            fill: colors.blue,
+            fill:  required ? 'red' :  '#dee1e6',
             cursor: 'move',
             // ...cfg.style || {},
           },

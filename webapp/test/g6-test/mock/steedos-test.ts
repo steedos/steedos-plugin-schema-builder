@@ -18,6 +18,7 @@ export type field = {
     is_system: boolean,
     is_enable: boolean,
     reference_to: string
+    required: boolean
 }
 
 export type ItoErd = (models: models)=> IModel[]
@@ -35,7 +36,8 @@ export const toERDModels : ItoErd  = (models: models) =>{
                           typeMeta: v.reference_to && {
                               type:'Relation',
                               relationModel: v.reference_to
-                          }
+                          },
+                          required: v.required
                         
                   }
               }),

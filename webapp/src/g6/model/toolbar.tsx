@@ -69,15 +69,15 @@ const BaseCommandList: any[] = [
 //     update(+new Date())
 //   },
 // },
-{
-  title: intl.get('锁定最小比例').d('锁定最小比例'),
-  key: 'lock-min',
-  icon: 'lock',
-  render: () => {
-  return  <LockOutlined />
-  },
-  click: ()=>{}
-},
+// {
+//   title: intl.get('锁定最小比例').d('锁定最小比例'),
+//   key: 'lock-min',
+//   icon: 'lock',
+//   render: () => {
+//   return  <LockOutlined />
+//   },
+//   click: ()=>{}
+// },
 
 // {
 //   title: intl.get('导入pdm文件').d('导入pdm文件'),
@@ -256,7 +256,7 @@ export default (({
   const zoomNum = graph && changeTwoDecimal_f(parseFloat(graph.getZoom() * 100 / 2) + '') || 0
   const dispatch = useDispatch()
 
-  const { isArrangeLayout } = useSelector((s) => s[namespace])
+  const { isArrangeLayout, lockMinZoom } = useSelector((s) => s[namespace])
   const arrangeLayout = useCallback(() => {
     dispatch({
       type: `${namespace}/setArrangeLayout`,
@@ -282,6 +282,15 @@ export default (({
 
   } , [graph])
 
+  const lockMinZoomSwitch = useCallback(()=>{
+  
+    dispatch({
+      type: `${namespace}/lockMinZoom`,
+      lockMinZoom: !lockMinZoom,
+    })
+
+  }, [lockMinZoom])
+
   // alert(graph && graph.getZoom())
   return (
   <div className='console-erd-toolbar'>
@@ -291,6 +300,11 @@ export default (({
         <Switch checkedChildren='聚合' unCheckedChildren='字段' size='small' onChange={arrangeLayout} checked={isArrangeLayout} />
         </span>
         </Tooltip> */}
+          <Tooltip title={!lockMinZoom ? intl.get('锁定最小比例').d('锁定最小比例') : intl.get('放开最小比例').d('放开最小比例') } >
+      <span className='command-btn zoomleft' onClick={lockMinZoomSwitch} >
+      { !!lockMinZoom ? <LockOutlined /> : <UnlockOutlined /> }
+        </span>
+        </Tooltip>
     <Tooltip title={intl.get('放大').d('放大')} ><span className='command-btn zoomleft' onClick={zoomInClick.bind(this, { toolBarCommand, graph, update })} ><ZoomInOutlined /></span></Tooltip>
     <span className='zoomNum noselect'>
     <Popover footer={false} content={<RadioGroup value={zoomNum * 2} onChange={zoomChange} >

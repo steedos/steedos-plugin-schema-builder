@@ -5,9 +5,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import { register } from './model-node'
 import './model.scss'
 import Toolbar from './toolbar'
+import { useSelector } from '../../hook'
 // import intl from './../util/intel'
 const MINZOOM = 0.01
-export const render = (container, data, props, setZoom) => {
+export const render = (container, data, props, setZoom, lockMinZoom) => {
   let width = props.width
   let height = props.height
   const { styleConfig } = props
@@ -17,7 +18,7 @@ export const render = (container, data, props, setZoom) => {
     // groupByTypes: false,
     fitView: true,
     container,
-    minZoom: MINZOOM,
+    minZoom: lockMinZoom ? 0.6 : MINZOOM,
     width,
     height,
     // autoPaint: false,
@@ -25,6 +26,10 @@ export const render = (container, data, props, setZoom) => {
     defaultEdge : styleConfig.default.edge,
     edgeStateStyles: {
       default: styleConfig.default.edge,
+      active: {
+        opacity: 1,
+        size: 3,
+      }
     },
     modes: {
       default: [ 
@@ -41,10 +46,18 @@ export const render = (container, data, props, setZoom) => {
         //   strokeOpacity: 0, fillOpacity: 0
         // }
       }, 
-      // {
-      //   type: 'activate-relations',
-      //   resetSelected: true,
-      // },
+      {
+        type: 'edge-tooltip',
+        formatText: (model) => {
+          return model.key;
+        },
+        offset: 10
+      },
+      {
+        type: 'activate-relations',
+        resetSelected: true,
+        trigger:'click'
+      },
      ],
     },
     plugins: [
@@ -286,22 +299,31 @@ const useUpdateItem = ({currentModel, graph}) => {
           const zoomNum = graph.getZoom()
           // alert(JSON.stringify(nodes))
           gnodes.forEach((node) => {
-          if (node.isSys) return
-          const nodeModel =  node.getModel()
-          const nodeId = nodeModel.id
-          const data = nodeModel ? nodeModel.data : undefined
-          const isNoModule =  (currentModel || '').indexOf('module-') >= 0 &&   ((data && data.moduleKey) !== currentModel)
-          const isKeySharp = zoomNum  <= 0.30 * 2
-          const isCardSharp =  zoomNum <= 0.05 * 2
-          // alert(isKeySharp)
-          graph.updateItem(node, {
-            selected: nodeId === currentModel,
-            noSelected: node !== currentModel,
-            isNoModule,
-            isKeySharp  ,
-            isCardSharp,
+            if (node.isSys) return
+            const nodeModel =  node.getModel()
+            const nodeId = nodeModel.id
+            const data = nodeModel ? nodeModel.data : undefined
+            const isNoModule =  (currentModel || '').indexOf('module-') >= 0 &&   ((data && data.moduleKey) !== currentModel)
+            const isKeySharp = zoomNum  <= 0.30 * 2
+            const isCardSharp =  zoomNum <= 0.05 * 2
+            // alert(isKeySharp)
+            graph.updateItem(node, {
+              selected: nodeId === currentModel,
+              noSelected: node !== currentModel,
+              isNoModule,
+              isKeySharp  ,
+              isCardSharp,
           })
-        })
+         })
+
+        //  const edges = graph.getEdges()
+        //  if(edges.length && currentModel){
+        //     edges.forEach(edge => {
+        //       if (edge.isSys) return
+        //       graph.setItemState(edge, 'active', true )
+        //       // edge.attr('stroke','red')
+        //     })
+        //  }
 
           graph.paint()
       }
@@ -311,6 +333,7 @@ const useUpdateItem = ({currentModel, graph}) => {
 
 export const ErdPage = (props) => {
   // const [data , setData ] = useState(props.graph)
+  const { lockMinZoom } = useSelector((s) => s[props.namespace])
   const containerRef = useRef({})
   const [graph, setGraph] = useState<any>(null)
   const {
@@ -336,12 +359,34 @@ export const ErdPage = (props) => {
     
     }, [graph?.getNodes().length >= 1])
 
+    useEffect(()=> {
+      // alert(lockMinZoom)
+      if(graph){
+        //  minZoom: lockMinZoom ? 0.6 : MINZOOM,
+        if(graph.getZoom() < 0.6) {
+          graph.getNodes().filter((a) => !a.isSys).forEach((node) => {
+            node.getContainer().show()
+            graph.updateItem(node, {
+                  isKeySharp: false,
+                  isCardSharp: false ,
+                })
+          })
+          const gwidth = graph.get('width')
+          const gheight = graph.get('height')
+          const point = graph.getCanvasByPoint(gwidth / 2, gheight / 2)
+          // graph.moveTo({x: point.x , y : point.y})
+          graph.zoomTo(0.6, {x: point.x , y : point.y})
+        }
+        graph.setMinZoom(lockMinZoom ? 0.6 : MINZOOM)
+      }
+    } , [lockMinZoom])
+
 
   useUpdateItem({currentModel : props.currentModel , graph})
 
   useEffect(() => {
     register({colors: props.colors})
-    const g = render(containerRef.current, props.graph, props, setZoom)
+    const g = render(containerRef.current, props.graph, props, setZoom , lockMinZoom)
     setGraph(g) // tslint:disable-next-line: no-unused-expression
 
     props.setGraph && props.setGraph(g)

@@ -202,6 +202,7 @@ export default (
 
         if (action.click === 'fieldSelect') {
           //
+          if(action.arg.relationModelKey){
           dispatch({
             type: `${namespace}/currentModel`,
             model: 'model-' + action.arg.relationModelKey,
@@ -210,6 +211,7 @@ export default (
           const item = _graph.findById('model-' + action.arg.relationModelKey)
 
           toCenter(item, _graph)
+        }
 
         }
 

@@ -32,15 +32,16 @@ export  const initStyle = ({primaryColor}) => {
         radius: 10,
         stroke: undefined,
         lineWidth: 4 ,
-        opacity: 1,
+        opacity: 0.8,
       },
       edge: {
         lineWidth: 2,
         size: 2,
         endArrow: {
           path: 'M 6,0 L -6,-6 L -3,0 L -6,6 Z',
-          d: 6,
+          d: 4,
         },
+        opacity: 0.2,
         radius: 5,
         labelCfg: {
           autoRotate: true,   // 使文本随边旋转
@@ -51,10 +52,20 @@ export  const initStyle = ({primaryColor}) => {
         stroke: primaryColor,
       },
     },
+    inactive: {
+      edge: {
+        stroke: 'red',
+      }
+    },
     selected: {
       node: {
         stroke: primaryColor,
       },
+    },
+    active: {
+      edge: {
+        stroke: 'red',
+      }
     },
     noSelected: {
       node: {

@@ -109,3 +109,11 @@ export const onCheckByModuleAllCancle = (ss, { moduleKey }) => {
     currentModel: checkedKeys.find(k => k === ss.currentModel) ? ss.currentModel : null,
   }
 }
+
+export const lockMinZoom = (ss, { lockMinZoom }) => {
+  //  alert(lockMinZoom)
+  return {
+    ...ss,
+    lockMinZoom: lockMinZoom
+  }
+}

@@ -23,12 +23,13 @@ const fields = (node, models) => {
       if (isForeign && field.typeMeta.relationModel) {
         const m = models.find((a) => a.key === field.typeMeta.relationModel)
         // if (m) return m.name || m.originalKey
-        return m
+        return m || { name: field.typeMeta.relationModel }
       }
 
       return ''
     })
     return {
+      ...field,
       key: field.key,
       label: showLable(field),
       type: field.type,

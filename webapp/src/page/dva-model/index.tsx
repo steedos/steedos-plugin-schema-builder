@@ -14,6 +14,7 @@ const fieldMap = (m) => ({
     key: v.key,
     name: v.name,
     originalKey: v.originalKey,
+    required: v.required,
 
     typeMeta: v.typeMeta && {
       type: v.typeMeta.type,
@@ -31,11 +32,12 @@ const fieldMap = (m) => ({
 export default (({
   namespace,
 }) => {
-  const { style, colors } = initStyle({primaryColor: '#495D9E'})
+  const { style, colors } = initStyle({primaryColor: 'black'})
   const state = {
      modules: [],
      models: [],
      showModel: null,
+     lockMinZoom: true,
      showInsertModel: null,
      currentModel: null,
      expandedKeys: [],
