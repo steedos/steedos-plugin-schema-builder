@@ -3,8 +3,15 @@ const processPath = process.cwd()
 const path = require('path')
 
 module.exports = ConsoleWebpack({
+  output: {
+    path: path.join(process.cwd(), '/public/schema-builder'),
+    publicPath: '/schema-builder',
+    
+  },
   devServer: {
     https: false ,
+    open: true ,
+    openPage:'schema-builder',
     proxy: {
       // "/api/v4/objects": {
       //   target: "http://127.0.0.1:5000",
@@ -39,7 +46,7 @@ module.exports = ConsoleWebpack({
   entry: {
     app: './webapp/test/index.tsx',
   }, 
-}, 'web-pdm', {
+}, 'schema-builder', {
     tsLoaderInclude: [
       path.resolve(processPath, 'webapp/src'),
       path.resolve(processPath,'webapp/test')

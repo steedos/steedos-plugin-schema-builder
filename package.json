@@ -7,8 +7,8 @@
         "debug": "nodemon server.js",
         "start": "node server.js",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "rm -rf public/demo &&  NODE_ENV=production webpack --config ./webapp/webconfig.config.js --mode production  --colors --max_old_space_size=1024 && rm -rf docker/public  ",
-        "watch": "time webpack-dev-server  --watch-poll --config ./webapp/webconfig.config.js --mode development"
+        "fe-build": "rm -rf public/demo &&  NODE_ENV=production webpack --config ./webapp/webconfig.config.js --mode production  --colors --max_old_space_size=1024 && rm -rf docker/public  ",
+        "fe-watch": "time webpack-dev-server  --watch-poll --config ./webapp/webconfig.config.js --mode development"
     },
     "author": "",
     "license": "ISC",
@@ -40,7 +40,7 @@
         "nodemon": "^1.19.1",
         "@types/react": "^16.9.22",
         "@types/react-dom": "^16.8.4",
-        "ak-webpack": "^1.0.6",
+        "ak-webpack": "^1.0.9",
         "typescript": "^3.8.2"
     },
     "homepage": "https://developer.steedos.com",
