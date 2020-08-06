@@ -8,7 +8,8 @@
         "start": "node server.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "fe-build": "rm -rf public/demo &&  NODE_ENV=production webpack --config ./webapp/webconfig.config.js --mode production  --colors --max_old_space_size=1024 && rm -rf docker/public  ",
-        "fe-watch": "time webpack-dev-server  --watch-poll --config ./webapp/webconfig.config.js --mode development"
+        "fe-watch": "time webpack-dev-server  --watch-poll --config ./webapp/webconfig.config.js --mode development",
+        "fe-publish": " scp ./public/schema-builder/**/* root@$SERVER_IP:/root/docker-yml/steedos/docker-volumes/steedos/public/schema-builder"
     },
     "author": "",
     "license": "ISC",

@@ -37,7 +37,7 @@ export default (({
      modules: [],
      models: [],
      showModel: null,
-     lockMinZoom: true,
+     lockMinZoom: false,
      showInsertModel: null,
      currentModel: null,
      expandedKeys: [],
