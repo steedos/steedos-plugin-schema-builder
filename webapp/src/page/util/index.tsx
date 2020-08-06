@@ -192,6 +192,9 @@ export const createLinks = (models, nodes, checkedKeys, styleConfig) => {
               targetAnchor:  model.key === field.typeMeta.relationModel ? (sourceAnchor - 1) : undefined,
               fieldIndex: i,
               fieldsLength: l,
+              // data: field,
+              tooltip: `<div>从 <span class='text'>${sourceModel?.data?.label}</span> 到 <span class='text'>${targetModel?.data?.label}</span> ${field.type} 关系</div>`
+
               type:
                 model.key === field.typeMeta.relationModel
                   ? 'loop'

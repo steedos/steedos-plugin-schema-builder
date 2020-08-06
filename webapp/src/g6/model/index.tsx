@@ -49,7 +49,7 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
       {
         type: 'edge-tooltip',
         formatText: (model) => {
-          return model.key;
+          return model.tooltip;
         },
         offset: 10
       },
