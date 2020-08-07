@@ -886,7 +886,7 @@ export const register = ({ colors }) => {
             // opacity: !cfg.isKeySharp ? 1 : 0,
             // radius: [2, 4],
             // fill: field.isForeign ?   'black' : 'black',
-            fill: required ? 'red' : ('rgba(11,108,149)'),
+            fill: ('rgba(11,108,149)'),
           },
         })
         // group.addShape('text', {
