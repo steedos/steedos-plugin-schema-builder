@@ -20,6 +20,7 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
     fitView: true,
     container,
     minZoom: lockMinZoom ? 0.6 : MINZOOM,
+    maxZoom: MAXZOOM,
     width,
     height,
     // autoPaint: false,
