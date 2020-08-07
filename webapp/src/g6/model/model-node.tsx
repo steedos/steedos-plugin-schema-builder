@@ -135,6 +135,7 @@ export interface IModelNodeShapeCfg {
   hide?: boolean
   inactive?: boolean
   isCardSharp?: boolean
+  showNameOrLabel?: boolean
 }
 export interface IField {
   key: string
@@ -148,7 +149,7 @@ export interface IField {
 const Relation = {
   ToOne: '1:1',
   ToMany: '1:n',
-  lookup:'lookup'
+  lookup:'查找'
 }
 
 const getLength  = (length) => {
@@ -269,10 +270,10 @@ export const register = ({ colors }) => {
         const y = l / h
         return [x, y]
       }),
-      ...getTopAnch(50),
-     ...getBottomAnch(50),
-     ...getLeftAnch(100),
-     ...getRightAnch(100),
+      ...getTopAnch(50)
+    //  ...getBottomAnch(50),
+    //  ...getLeftAnch(100),
+    //  ...getRightAnch(100),
     ]
     },
 
@@ -291,6 +292,7 @@ export const register = ({ colors }) => {
         isCardSharp,
         out,
         isNoModule,
+        showNameOrLabel
       } = cfg
       const group = item.getContainer()
       const children = group.get('children')
@@ -358,10 +360,16 @@ export const register = ({ colors }) => {
     case 'headerlabel0':
     case 'headerlabel1':
     s.set('visible', !cfg.isKeySharp && !cfg.isCardSharp)
+    const fieldLable1 = s.attr('fieldLable')
+    if(fieldLable1) {
+       s.attr('text', showNameOrLabel ? fieldLable1 :  s.attr('nameLable'))
+    }
             // s.attr('opacity', 1)
     break
     case 'header':
             // s.attr('opacity', !cfg.isKeySharp ? 1 : 0)
+    //selected && setNodeStateAttr('selected', s, cfg)
+    s.attr('fill', selected ? 'rgba(11,108,149)' : colors.blue)
     s.set('visible',  !cfg.isCardSharp)
             // s.attr('opacity', 1)
     break
@@ -370,7 +378,17 @@ export const register = ({ colors }) => {
     case 'headerlabel3':
             // s.attr('opacity', cfg.isKeySharp ? 1 : 0)
             // s.attr('opacity', inactive && !into && !out && !active ? 0.2 : 1)
-    s.set('visible', cfg.isKeySharp && !cfg.isCardSharp)
+    const _showNameOrLabel = s.get('showNameOrLabel') 
+    if(_showNameOrLabel && showNameOrLabel) {
+      s.set('visible', cfg.isKeySharp && !cfg.isCardSharp)
+    } else {
+      if(!_showNameOrLabel && !showNameOrLabel)
+      s.set('visible', cfg.isKeySharp && !cfg.isCardSharp) 
+      else {
+        s.set('visible', false) 
+      }
+    }
+    
     break
 
     case 'field':
@@ -382,6 +400,10 @@ export const register = ({ colors }) => {
     s.set('visible', !cfg.isKeySharp) //   Object.entries(cfg.config.styleConfig.active.node).forEach(([k, v]) => {
             //     s.attr(k, v)
             // })
+    const fieldLable = s.attr('fieldLable')
+    if(fieldLable) {
+       s.attr('text', showNameOrLabel ? fieldLable :  s.attr('nameLable'))
+    }
 
     break
 
@@ -418,6 +440,7 @@ export const register = ({ colors }) => {
       const {
         config,
         data,
+        showNameOrLabel
       } = cfg
 
       data.aggregateRoot = true
@@ -485,7 +508,9 @@ export const register = ({ colors }) => {
           // fontFamily: 'iconFont',
           x: -(config.width / 2) + 20 ,
           y: -(getLength(data.fields.length) * config.fieldHeight / 2),
-          text:  data.label,
+          text:  showNameOrLabel ? data.key : data.label,
+          fieldLable: data.key,
+          nameLable:  data.label,
           // text: '\ue6b2',
           id: 'headerlabel1',
           cursor: 'move',
@@ -602,14 +627,15 @@ export const register = ({ colors }) => {
       //     },
       //   })
 
-      const nameList = ((data.name.replace(/\(/, '-').replace(/\)/, '')) || '').split('_').flatMap((nameStr) => nameStr.split('-')).flatMap((nameStr) => nameStr.split('/')).flatMap((a) => getSplitStrings(a)).filter((a) => a)
-
+      // const nameList = ((data.name.replace(/\(/, '-').replace(/\)/, '')) || '').split('_').flatMap((nameStr) => nameStr.split('-')).flatMap((nameStr) => nameStr.split('/')).flatMap((a) => getSplitStrings(a)).filter((a) => a)
+      const nameList = [data.name]
       const height = config.headerHeight + (data.fields.length >= 12 ? data.fields.length  : 12) * config.fieldHeight
       const nameLength = nameList.length
       nameList.forEach((nameText, index) => {
         group.addShape('text', {
-          visible: cfg.isKeySharp,
+          visible: cfg.isKeySharp && !showNameOrLabel,
           name: nameText,
+          showNameOrLabel: false,
           draggable: true,
           attrs: {
           x: 0,
@@ -625,7 +651,36 @@ export const register = ({ colors }) => {
           fill: 'black',
           },
         })
-      }) // group.addShape('text', {
+      }) 
+
+      // const nameList1 = ((data.key.replace(/\(/, '-').replace(/\)/, '')) || '').split('_').flatMap((nameStr) => nameStr.split('-')).flatMap((nameStr) => nameStr.split('/')).flatMap((a) => getSplitStrings(a)).filter((a) => a)
+      const nameList1 = [data.key]
+      const height1 = config.headerHeight + (data.fields.length >= 12 ? data.fields.length  : 12) * config.fieldHeight
+      const nameLength1 = nameList.length
+      nameList1.forEach((nameText, index) => {
+        group.addShape('text', {
+          visible: cfg.isKeySharp && showNameOrLabel,
+          showNameOrLabel: true,
+          name: nameText,
+          draggable: true,
+          attrs: {
+          x: 0,
+          y: - height1 / 2 + height1 / (nameLength1 + 1) * (index + 1),
+          fontSize: config.width / 5,
+          text: nameText,
+            // opacity: index === nameLength - 1 ? 1 : 0.3,
+          id: 'headerlabel2',
+          className: 'headerlabel',
+          textBaseline: 'middle',
+          textAlign: 'center',
+            // radius: [2, 4],
+          fill: 'black',
+          },
+        })
+      })
+      
+      
+      // group.addShape('text', {
       //     visible: cfg.isKeySharp,
       //     attrs: {
       //       x: 0,
@@ -764,21 +819,49 @@ export const register = ({ colors }) => {
             draggable: true,
             // click: 'fieldEdit',
             y: -((config.headerHeight + getLength(data.fields.length) * config.fieldHeight) / 2) + config.headerHeight + config.fieldHeight * index + config.fieldHeight / 2,
-            text: field.label,
+            text: showNameOrLabel? field.originalKey : field.label,
             fieldName: field.key,
             arg: field.originalKey,
             fontSize: config.labelSize,
             textBaseline: 'middle',
             cursor: 'move',
             id: 'field',
+            fieldLable: field.originalKey,
+            nameLable:  field.label,
             textAlign: 'start',
             // opacity: !cfg.isKeySharp ? 1 : 0,
             // radius: [2, 4],
-            fill: required ? 'red' : ('rgba(0,0,0,0.60)'), // fill: 'rgb(153,153,153)',
+            fill: required ? 'red' : ('black'), // fill: 'rgb(153,153,153)',
             // fill: field.isForeign ?   'black' : 'black',
 
           },
         })
+        // group.addShape('text', {
+        //   visible: !cfg.isKeySharp,
+        //   name: field.key,
+        //   draggable: true,
+        //   attrs: {
+        //     x: -config.width / 2 + 20,
+        //     fieldHover: true,
+        //     name: field.key,
+        //     draggable: true,
+        //     // click: 'fieldEdit',
+        //     y: -((config.headerHeight + getLength(data.fields.length) * config.fieldHeight) / 2) + config.headerHeight + config.fieldHeight * index + config.fieldHeight / 2,
+        //     text: field.originalKey,
+        //     fieldName: field.key,
+        //     arg: field.originalKey,
+        //     fontSize: config.labelSize,
+        //     textBaseline: 'middle',
+        //     cursor: 'move',
+        //     id: 'field',
+        //     textAlign: 'start',
+        //     // opacity: !cfg.isKeySharp ? 1 : 0,
+        //     // radius: [2, 4],
+        //     fill: required ? 'red' : ('rgba(0,0,0,0.60)'), // fill: 'rgb(153,153,153)',
+        //     // fill: field.isForeign ?   'black' : 'black',
+
+        //   },
+        // })
         const RelationType = Relation[field.type] || field.type
         const text = isForeign ?( field.type && RelationType ? `${RelationType}(${relationModel ||''})` : relationModel) : `${field.type || ''}`
         group.addShape('text', {
@@ -803,7 +886,7 @@ export const register = ({ colors }) => {
             // opacity: !cfg.isKeySharp ? 1 : 0,
             // radius: [2, 4],
             // fill: field.isForeign ?   'black' : 'black',
-            fill: required ? 'red' : ('rgba(0,0,0,0.30)'),
+            fill: required ? 'red' : ('rgba(11,108,149)'),
           },
         })
         // group.addShape('text', {
@@ -856,7 +939,7 @@ export const register = ({ colors }) => {
             // fill: field.isForeign ?  '#dee1e6' : 'white',
             // ...cfg.style || {},
             // fill: field.isForeign ?  '#dee1e6' : 'white',
-            fill:  required ? 'red' :  '#dee1e6',
+            fill:  required ? 'red' :   ('rgba(11,108,149)'),
             cursor: 'move',
             // ...cfg.style || {},
           },

@@ -41,7 +41,7 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
       },
       {
         type: 'drag-node',
-        enableDelegate: true,
+        // enableDelegate: true,
         // delegate: false,
         // delegateStyle: {
         //   strokeOpacity: 0, fillOpacity: 0
@@ -271,8 +271,16 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
     edges.forEach((edge) => {
       let sourceNode = edge.get('sourceNode')
       let targetNode = edge.get('targetNode')
+      const targetModel = targetNode.getModel()
+      if(!edge.getModel().self) {
+          const isTo = targetModel.x > sourceNode.getModel().x
+          const targetAnchor = (isTo ? 0 : 1)
+          if(targetModel.targetAnchor !== targetAnchor)
+          // edge.set('targetAnchor', targetAnchor)
+          graph.updateItem(edge, {targetAnchor} )
+      }
 
-      if (targetNode.getModel().isSys) {
+      if (targetModel.isSys) {
         edge.hide()
         return
       }
@@ -284,13 +292,13 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
         edge.show()
       }
     })
-  }, 10)) // graph.on('node:dblclick', (ev) => {
+  }, 300)) // graph.on('node:dblclick', (ev) => {
   // })
 
   return graph
 }
 
-const useUpdateItem = ({currentModel, graph}) => {
+const useUpdateItem = ({currentModel, graph, showNameOrLabel}) => {
       useEffect(() => {
 
         if (graph) {
@@ -314,6 +322,7 @@ const useUpdateItem = ({currentModel, graph}) => {
               isNoModule,
               isKeySharp  ,
               isCardSharp,
+              showNameOrLabel
           })
          })
 
@@ -329,12 +338,12 @@ const useUpdateItem = ({currentModel, graph}) => {
           graph.paint()
       }
 
-       }, [currentModel, graph && graph.getZoom(), graph?.getNodes()])
+       }, [currentModel, graph && graph.getZoom(), graph?.getNodes(),showNameOrLabel])
 }
 
 export const ErdPage = (props) => {
   // const [data , setData ] = useState(props.graph)
-  const { lockMinZoom } = useSelector((s) => s[props.namespace])
+  const { lockMinZoom, showNameOrLabel } = useSelector((s) => s[props.namespace])
   const containerRef = useRef({})
   const [graph, setGraph] = useState<any>(null)
   const {
@@ -383,7 +392,7 @@ export const ErdPage = (props) => {
     } , [lockMinZoom])
 
 
-  useUpdateItem({currentModel : props.currentModel , graph})
+  useUpdateItem({currentModel : props.currentModel , graph, showNameOrLabel})
 
   useEffect(() => {
     register({colors: props.colors})

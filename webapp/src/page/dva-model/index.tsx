@@ -47,6 +47,7 @@ export default (({
      layouting : false,
      isArrangeLayout: false,
      fieldMap,
+     showNameOrLabel: false,
      config : {
       style,
       namespace: 'erd',

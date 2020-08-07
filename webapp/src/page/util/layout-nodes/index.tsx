@@ -29,8 +29,8 @@ export const layOutNodesByG6 = (nodes: any[], edges: any[], groups: any[], setNo
     // center: [500, 450],
     // nodeSize: 700,
     // nodeStrength: -30,
-    linkDistance:200,
-    nodeSpacing: -250 ,
+    // linkDistance:200,
+    nodeSpacing: -180 ,
     preventOverlap: true,
     onLayoutEnd: () => {
       // alert('onLayoutEnd')

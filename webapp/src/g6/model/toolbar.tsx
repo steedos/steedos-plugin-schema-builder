@@ -312,7 +312,7 @@ export default (({
         <Radio value={100}>50%</Radio>
         <Radio value={20}>10%</Radio>
       </RadioGroup>} placement='bottom' > */}
-      {graph && `${zoomNum * 2 > 200 ? 100 :(zoomNum * 2) }%` }
+      {graph && `${(zoomNum * 2) >= 100 ? 100 :(zoomNum * 2) }%` }
       {/* </Popover> */}
       </span>
     <Tooltip title={intl.get('缩小').d('缩小')} ><span className='command-btn' onClick={zoomOutClick.bind(this, { toolBarCommand, graph, update })}><ZoomOutOutlined /></span></Tooltip>

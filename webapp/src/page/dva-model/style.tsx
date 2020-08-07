@@ -50,7 +50,7 @@ export  const initStyle = ({primaryColor}) => {
             fontSize: 34,
           },
         },
-        stroke: primaryColor,
+        stroke: 'rgba(11,108,149)',
       },
     },
     inactive: {
@@ -60,7 +60,7 @@ export  const initStyle = ({primaryColor}) => {
     },
     selected: {
       node: {
-        stroke: primaryColor,
+        stroke: 'rgba(11,108,149)',
       },
     },
     active: {

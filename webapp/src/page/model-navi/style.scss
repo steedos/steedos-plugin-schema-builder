@@ -84,6 +84,12 @@
          .ant-tree-treenode {
            width: 100%;
          }
+
+         .ant-tree-node-selected {
+            .tree-node-title {
+              color: white;
+            }
+         }
         //  div.ant-tree-treenode:hover {
         //   background-color: red;
         // }

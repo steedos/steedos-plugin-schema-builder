@@ -24,7 +24,10 @@ const ErdPdmPage =  (props) => {
     //  alert(window.location.href)
      message.error('请登录');
      window.location.href = '/accounts/a/#/login?redirect_uri='+ encodeURI(window.location.href)
+   } else {
+     if(error)  message.error(error.message);
    }
+
 
    const openModelFun = useCallback((args)=>{
      window.open(`/app/admin/objects/view/${args.model}`,'model')

@@ -31,7 +31,18 @@ const renderTitleGreen = (isSpec, title) => {
   )
 }
 
+const renderModelTitle = (title, searchValue , showNameOrLabel, originalKey) => {
+
+    if(showNameOrLabel) {
+      return renderTitle(originalKey, searchValue)
+    } else {
+      return renderTitle(title, searchValue)
+    }
+ 
+}
+
 const renderTitle = (title, searchValue = '', isSpec = false) => {
+
   if (!searchValue) return title
   const index = title.indexOf(searchValue)
   const beforeStr = title.substr(0, index)
@@ -136,6 +147,13 @@ export default forwardRef((props: any, ref) => {
       moduleKey: moduleValue,
     })
   }
+
+  const toggleShowNameOrLabel = useCallback(() => {
+    dispatch({
+      type: `${namespace}/showNameOrLabel`,
+      showNameOrLabel: !store.showNameOrLabel,
+    })
+  },[store.showNameOrLabel])
   
 
   return useMemo(() => (
@@ -153,6 +171,7 @@ export default forwardRef((props: any, ref) => {
             <Button size="small" type="link" onClick={checkAllFun} >选择所有</Button>
             {/* <Divider type="vertical" /> */}
             <Button size="small" type="link" onClick={checkAllCancleFun}>清除所有</Button>
+            <Button size="small" type="link" onClick={toggleShowNameOrLabel}>显示{!store.showNameOrLabel?'名称':'标签'}</Button>
           </div>
           </div>
           <div className='navitree-warp'>
@@ -213,7 +232,7 @@ export default forwardRef((props: any, ref) => {
             }> */}
                 {store.models.filter((m) =>  !m.delete && (!moduleValue || m.moduleKey === moduleValue)).filter((m) => !searchText || m.name.indexOf(searchText) >= 0).map((m) => {
               return <TreeNode title={<OptionBuilder data={{
-                title: renderTitle(m.name, searchText),
+                title: renderModelTitle(m.name, searchText, store.showNameOrLabel, m.originalKey),
                 options: [{
                   title: <span> {intl.get('定位模型').d('定位模型')}</span>,
                   click: () => {
@@ -264,7 +283,7 @@ export default forwardRef((props: any, ref) => {
       </NaviTree>
       </Scroll>
       </div>
-  </div>), [store.checkedKeys, store.currentModel, store.expandedKeys, store.modules, store.models, searchText, moduleValue])
+  </div>), [store.checkedKeys, store.currentModel, store.expandedKeys, store.modules, store.models, searchText, moduleValue, store.showNameOrLabel])
 })
 
 const useLocal = ({

@@ -114,6 +114,13 @@ export const lockMinZoom = (ss, { lockMinZoom }) => {
   //  alert(lockMinZoom)
   return {
     ...ss,
-    lockMinZoom: lockMinZoom
+    lockMinZoom
+  }
+}
+
+export const showNameOrLabel = (ss, {showNameOrLabel}) => {
+  return {
+    ...ss,
+    showNameOrLabel
   }
 }
