@@ -2,16 +2,18 @@ const ConsoleWebpack = require("ak-webpack");
 const processPath = process.cwd()
 const path = require('path')
 
+const moduleName = 'schema-builder'
+
 module.exports = ConsoleWebpack({
   output: {
-    path: path.join(process.cwd(), '/public/schema-builder'),
-    publicPath: '/schema-builder',
+    path: path.join(process.cwd(), '/public/'+ moduleName),
+    publicPath: '/'+ moduleName,
     
   },
   devServer: {
     https: false ,
     open: true ,
-    openPage:'schema-builder',
+    openPage: moduleName,
     proxy: {
       // "/api/v4/objects": {
       //   target: "http://127.0.0.1:5000",
@@ -46,7 +48,7 @@ module.exports = ConsoleWebpack({
   entry: {
     app: './webapp/test/index.tsx',
   }, 
-}, 'schema-builder', {
+}, moduleName, {
     tsLoaderInclude: [
       path.resolve(processPath, 'webapp/src'),
       path.resolve(processPath,'webapp/test')

@@ -33,7 +33,7 @@ const ErdPdmPage =  (props) => {
      window.open(`/app/admin/objects/view/${args.model}`,'model')
    } , [])
     
-   if(!data) return <Skeleton avatar active paragraph={{ rows: 20 }} />
+  if(!data) return <Skeleton avatar active paragraph={{ rows: 20 }} >{error?.message}</Skeleton>
    return (
    <Page {...props}
      getModels={getModels}
