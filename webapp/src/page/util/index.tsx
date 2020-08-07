@@ -128,6 +128,12 @@ const noInCheckedKeys = (checkedKeys, sourceModel, targetModel) => {
    return checkedKeys.indexOf(sourceModel) === -1 || checkedKeys.indexOf(targetModel) === -1
  }
 
+ const Relation = {
+  ToOne: '1:1',
+  ToMany: '1:n',
+  lookup:'查找'
+}
+
 export const createLinks = (models, nodes, checkedKeys, styleConfig) => {
   const links = models.reduce((pre, model) => {
      if (!nodes.find((a) => a.id === 'model-' + model.key)) return pre
@@ -196,7 +202,7 @@ export const createLinks = (models, nodes, checkedKeys, styleConfig) => {
               fieldIndex: i,
               fieldsLength: l,
               // data: field,
-              tooltip: `<div>从 <span class='text'>${sourceModel?.data?.label}</span> 到 <span class='text'>${targetModel?.data?.label}</span> ${field.type} 关系</div>`
+              tooltip: `<div>从 <span class='text'>${sourceModel?.data?.label}</span> 到 <span class='text'>${targetModel?.data?.label}</span> ${Relation[field.type]||field.type} 关系</div>`
 
               type:
                 model.key === field.typeMeta.relationModel

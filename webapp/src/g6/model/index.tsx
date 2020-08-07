@@ -37,6 +37,7 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
       default: [ 
          'drag-canvas', {
         type: 'zoom-canvas',
+        enableOptimize: true,
         minZoom: MINZOOM,
         maxZoom: MAXZOOM,
       },
