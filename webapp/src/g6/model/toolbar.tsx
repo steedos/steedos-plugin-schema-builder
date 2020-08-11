@@ -25,7 +25,8 @@ const IconRenders = {
   'pdm' : <FileMarkdownOutlined />,
   'lock': <LockOutlined />,
   'unlock': <UnlockOutlined />,
-  'image':<FileImageOutlined />
+  'image':<FileImageOutlined />,
+  'upload':<FileImageOutlined />
 
 }
 

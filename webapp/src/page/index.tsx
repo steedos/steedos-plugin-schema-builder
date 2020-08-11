@@ -239,6 +239,7 @@ export default (
           }
         }, {})
         sessionStorage.setItem('console-erd-graph', JSON.stringify(nodes))
+        alert(JSON.stringify(nodes))
       }
 
       if (name === 'max-zoom') {

@@ -8,7 +8,8 @@ const setNodeXY = (nodesDict, node) => {
     node.x = nodesDict[id].x
     node.y = nodesDict[id].y
     return true
-  }
+  } 
+  return false
 }
 
 const getLength  = (length) => {
@@ -33,7 +34,7 @@ export const layOutNodesByG6 = (nodes: any[], edges: any[], groups: any[], setNo
     nodeSpacing: -180 ,
     preventOverlap: true,
     onLayoutEnd: () => {
-      // alert('onLayoutEnd')
+      alert('onLayoutEnd')
       if (setNodeState) {
         setEdgeState(edges)
         setNodeState([...nodes])
@@ -55,6 +56,15 @@ export const layOutNodesByG6 = (nodes: any[], edges: any[], groups: any[], setNo
   subgraphLayout.execute()
   console.log([nodes, edges])
 
+  // const graphString = sessionStorage.getItem('console-erd-graph')
+  // // alert('force layout')
+  // const nodesDict = graphString && JSON.parse(graphString)
+  // nodes.forEach((node) => {
+  //   if (nodesDict) {
+  //      setNodeXY(nodesDict, node)
+  //   }
+  // })
+
   // 图实例根据数据更新节点位置
   // graph.positionsAnimate()
   return [nodes, edges]
@@ -75,6 +85,15 @@ export const layOutNodesByG6Force  = (nodes: any[], edges: any[], groups: any[])
 
   // 执行布局
   subgraphLayout.execute()
+
+  const graphString = sessionStorage.getItem('console-erd-graph')
+  alert(graphString)
+  const nodesDict = graphString && JSON.parse(graphString)
+  nodes.forEach((node) => {
+    if (nodesDict) {
+       setNodeXY(nodesDict, node)
+    }
+  })
 
   // 图实例根据数据更新节点位置
   // graph.positionsAnimate()
@@ -122,16 +141,21 @@ export const layOutNodes = (nodes: any[], edges: any[], groups: any[]) => {
 
   // })
   dagre.layout(g)
+  const graphString = sessionStorage.getItem('console-erd-graph')
+  const nodesDict = graphString && JSON.parse(graphString)
   nodes.forEach((node) => {
-    if (sessionStorage.getItem('console-erd-graph')) {
-      const nodesDict = JSON.parse(sessionStorage.getItem('console-erd-graph'))
+    if (nodesDict) {
+      
       const isStorage = setNodeXY(nodesDict, node)
       if (isStorage) return
     }
 
     node.x = g.node(node.id).x
     node.y = g.node(node.id).y
-  }) // -------
+  }) 
+  
+  
+  // -------
 
   // edges.forEach((edge) => {
   //   const { source, target, fieldIndex, fieldsLength } = edge

@@ -24,6 +24,24 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
     width,
     height,
     // autoPaint: false,
+    // layout: {
+    //   type: 'fruchterman',
+    //   gravity: 20,              // 可选
+    //   speed: 2,                 // 可选
+    //   clustering: true,         // 可选
+    //   clusterGravity: 30,       // 可选
+    //   maxIteration: 2000,       // 可选，迭代次数
+    //   workerEnabled: true       // 可选，开启 web-worker  }
+    // },
+    layout : {
+      type: 'force',
+      nodeSpacing: -150 ,
+      preventOverlap: true,
+      onLayoutEnd: () => {
+        graph.fitView(0)
+      }
+
+    },
     animate: true,
     defaultEdge : styleConfig.default.edge,
     edgeStateStyles: {
@@ -75,6 +93,7 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
   })
   graph.data({nodes, edges: data.edges})
   graph.render()
+  // alert(nodes.length)
   graph.get('canvas').set('localRefresh', false)
   graph.on('node:dblclick', (ev) => {
     const node = ev.item
@@ -337,7 +356,7 @@ const useUpdateItem = ({currentModel, graph, showNameOrLabel}) => {
         //     })
         //  }
 
-          graph.paint()
+          // graph.paint()
       }
 
        }, [currentModel, graph && graph.getZoom(), graph?.getNodes(),showNameOrLabel])

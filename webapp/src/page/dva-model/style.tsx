@@ -25,14 +25,15 @@ export  const initStyle = ({primaryColor}) => {
     default: {
       node: {
         fill: '#FFFFFF',
-        shadowColor: 'rgba(0,0,0,0.06)',
+        // shadowColor: 'rgba(0,0,0,0.06)',
         shadowBlur: 15,
         shadowOffsetX: 8,
         shadowOffsetY: 8,
         radius: 10,
-        stroke: undefined,
+        // stroke: undefined,
         lineWidth: 4 ,
         opacity: 0.8,
+        stroke: 'black',
       },
       edge: {
         lineWidth: 2,

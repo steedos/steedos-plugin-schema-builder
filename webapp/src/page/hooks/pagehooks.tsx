@@ -79,7 +79,11 @@ export const useLocalHooks = ({namespace, useAppContext}) => {
       // alert(1)
       setLayouting(true)
       setImmediate(() => {
-        layOutNodesByG6(nodes, edges, modules, setNodeState, setEdgeState, setLayouting, isArrangeLayout)
+        // layOutNodesByG6(nodes, edges, modules, setNodeState, setEdgeState, setLayouting, isArrangeLayout)
+        setEdgeState(edges)
+        setNodeState(nodes)
+       
+        setLayouting(false)
        }, 10)
   }, [newModels, checkedKeys, isArrangeLayout, search])
 
