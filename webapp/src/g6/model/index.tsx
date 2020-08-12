@@ -34,6 +34,7 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
     //   workerEnabled: true       // 可选，开启 web-worker  }
     // },
     layout : {
+      alphaDecay: 0.2 ,
       type: 'force',
       nodeSpacing: -150 ,
       preventOverlap: true,
@@ -384,6 +385,16 @@ export const ErdPage = (props) => {
 
   useEffect(() => { 
      if(graph && graph.getNodes().length) {
+      // graph.updateLayout({
+      //   alphaDecay : 1 - graph.getNodes().length / 20
+      //  })
+      if(graph.getNodes().length <= 5)
+      {
+        // alert()
+           graph.updateLayout({
+             alphaDecay :1
+       })
+      }
       graph.fitView(0)
       // alert(111) 
      }
@@ -437,7 +448,19 @@ export const ErdPage = (props) => {
       if (data.nodes.length >= 1) {
         graph.changeData(data)
         // graph.refresh()
-        graph.fitView(0)
+        // alert()
+        // graph.updateLayout({
+        //   alphaDecay: 1 ,
+        //   type: data.nodes.length <= 5 ? 'random' : 'force',
+        //   nodeSpacing: -150 ,
+        //   preventOverlap: true,
+        //   onLayoutEnd: () => {
+        //       graph.fitView(0)
+        //    }
+        // })
+        graph.layout()
+        // alert()
+        // graph.fitView(0)
       } else {
         graph.clear() // graph.fitView(0)
         graph.refresh()
