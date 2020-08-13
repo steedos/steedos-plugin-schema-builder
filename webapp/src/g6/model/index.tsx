@@ -33,18 +33,31 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
     //   maxIteration: 2000,       // 可选，迭代次数
     //   workerEnabled: true       // 可选，开启 web-worker  }
     // },
-    layout : {
-      alphaDecay: 0.2 ,
-      type: 'force',
-      nodeSpacing: -150 ,
-      preventOverlap: true,
-      onLayoutEnd: () => {
-        graph.fitView(0)
-      }
+    // layout : {
+    //   alphaDecay: 0.2 ,
+    //   type: 'force',
+    //   // collideStrength: 0.5,
+    //   // nodeSpacing: (d) => {
+    //   //   if (d.id === 'model-SYS-CENTER-POINT') {
+    //   //     return 500;
+    //   //   }
+    //   //   return -150;
+    //   // },
 
-    },
+    //   // nodeStrength: d => {
+    //   //   if (d.id === 'model-SYS-CENTER-POINT') {
+    //   //     return : 500;
+    //   //   }
+    //   //   return 0;
+    //   // },
+    //   preventOverlap: true,
+    //   onLayoutEnd: () => {
+    //     graph.fitView(0)
+    //   }
+
+    // },
     animate: true,
-    defaultEdge : styleConfig.default.edge,
+    defaultEdge: styleConfig.default.edge,
     edgeStateStyles: {
       default: styleConfig.default.edge,
       active: {
@@ -53,46 +66,46 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
       }
     },
     modes: {
-      default: [ 
-         'drag-canvas', {
-        type: 'zoom-canvas',
-        // enableOptimize: true,
-        minZoom: MINZOOM,
-        maxZoom: MAXZOOM,
-      },
-      {
-        type: 'drag-node',
-        // enableDelegate: true,
-        // delegate: false,
-        // delegateStyle: {
-        //   strokeOpacity: 0, fillOpacity: 0
-        // }
-      }, 
-      {
-        type: 'edge-tooltip',
-        formatText: (model) => {
-          return model.tooltip;
+      default: [
+        'drag-canvas', {
+          type: 'zoom-canvas',
+          // enableOptimize: true,
+          minZoom: MINZOOM,
+          maxZoom: MAXZOOM,
         },
-        offset: 10
-      },
-      {
-        type: 'activate-relations',
-        resetSelected: true,
-        trigger:'click'
-      },
-     ],
+        {
+          type: 'drag-node',
+          // enableDelegate: true,
+          // delegate: false,
+          // delegateStyle: {
+          //   strokeOpacity: 0, fillOpacity: 0
+          // }
+        },
+        {
+          type: 'edge-tooltip',
+          formatText: (model) => {
+            return model.tooltip;
+          },
+          offset: 10
+        },
+        {
+          type: 'activate-relations',
+          resetSelected: true,
+          trigger: 'click'
+        },
+      ],
     },
     plugins: [
       new G6.Minimap({
-      type: 'delegate',
-      viewportClassName: 'g6-minimap-viewport-erd',
-      delegateStyle: {
-        fill: 'rgba(0,0,0,0.10)',
-      },
-    })
-  ],
+        type: 'delegate',
+        viewportClassName: 'g6-minimap-viewport-erd',
+        delegateStyle: {
+          fill: 'rgba(0,0,0,0.10)',
+        },
+      })
+    ],
   })
-  graph.data({nodes, edges: data.edges})
+  graph.data({ nodes, edges: data.edges })
   graph.render()
   // alert(nodes.length)
   graph.get('canvas').set('localRefresh', false)
@@ -115,6 +128,14 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
     const canvasElement = graph.get('canvas').get('el')
     canvasElement.style.cursor = 'grabbing'
   })
+
+  // graph.on('afterlayout', () => {
+  //   // alert()
+  //   setTimeout(()=>{
+  //     graph.fitView(0)
+  //   }, 500)
+
+  // })
 
   // canvas:dragend
   graph.on('canvas:dragend', () => {
@@ -244,11 +265,11 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
             // targetAnchor: undefined,
           })
         } else {
-        graph.updateItem(edge, {
-          sourceAnchor: !isTo ? i + 2 : 2 + i + l,
-          // targetAnchor: isTo ? 0 : 1,
-        })
-      }
+          graph.updateItem(edge, {
+            sourceAnchor: !isTo ? i + 2 : 2 + i + l,
+            // targetAnchor: isTo ? 0 : 1,
+          })
+        }
       }
     }) // ----获取所有的边
     // ----获取所有关联模型
@@ -261,7 +282,7 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
   graph.on('beforepaint', _.throttle(() => {
     // alert()
     const isExporting = graph['isExporting']
-    const gWidth  = graph.get('width')
+    const gWidth = graph.get('width')
     const gHeight = graph.get('height')
     // 获取视窗左上角对应画布的坐标点
     const topLeft = graph.getPointByCanvas(0, 0) // 获取视窗右下角对应画布坐标点
@@ -273,7 +294,7 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
         node.getContainer().hide()
         return
       }
-      if(isExporting) return
+      if (isExporting) return
       const {
         config,
         data: _data,
@@ -294,19 +315,19 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
       let sourceNode = edge.get('sourceNode')
       let targetNode = edge.get('targetNode')
       const targetModel = targetNode.getModel()
-      if(!edge.getModel().self) {
-          const isTo = targetModel.x > sourceNode.getModel().x
-          const targetAnchor = (isTo ? 0 : 1)
-          if(targetModel.targetAnchor !== targetAnchor)
+      if (!edge.getModel().self) {
+        const isTo = targetModel.x > sourceNode.getModel().x
+        const targetAnchor = (isTo ? 0 : 1)
+        if (targetModel.targetAnchor !== targetAnchor)
           // edge.set('targetAnchor', targetAnchor)
-          graph.updateItem(edge, {targetAnchor} )
+          graph.updateItem(edge, { targetAnchor })
       }
 
       if (targetModel.isSys) {
         edge.hide()
         return
       }
-      if(isExporting) return
+      if (isExporting) return
 
       if (!sourceNode.getContainer().get('visible') && !targetNode.getContainer().get('visible')) {
         edge.hide()
@@ -320,47 +341,47 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
   return graph
 }
 
-const useUpdateItem = ({currentModel, graph, showNameOrLabel}) => {
-      useEffect(() => {
+const useUpdateItem = ({ currentModel, graph, showNameOrLabel }) => {
+  useEffect(() => {
 
-        if (graph) {
-          const gnodes =  graph.getNodes()
-          if(!gnodes.length) return
-          // alert(nodes.length)
-          const zoomNum = graph.getZoom()
-          // alert(JSON.stringify(nodes))
-          gnodes.forEach((node) => {
-            if (node.isSys) return
-            const nodeModel =  node.getModel()
-            const nodeId = nodeModel.id
-            const data = nodeModel ? nodeModel.data : undefined
-            const isNoModule =  (currentModel || '').indexOf('module-') >= 0 &&   ((data && data.moduleKey) !== currentModel)
-            const isKeySharp = zoomNum  <= 0.20 * 2
-            const isCardSharp =  zoomNum <= 0.05 * 2
-            // alert(isKeySharp)
-            graph.updateItem(node, {
-              selected: nodeId === currentModel,
-              noSelected: node !== currentModel,
-              isNoModule,
-              isKeySharp  ,
-              isCardSharp,
-              showNameOrLabel
-          })
-         })
+    if (graph) {
+      const gnodes = graph.getNodes()
+      if (!gnodes.length) return
+      // alert(nodes.length)
+      const zoomNum = graph.getZoom()
+      // alert(JSON.stringify(nodes))
+      gnodes.forEach((node) => {
+        if (node.isSys) return
+        const nodeModel = node.getModel()
+        const nodeId = nodeModel.id
+        const data = nodeModel ? nodeModel.data : undefined
+        const isNoModule = (currentModel || '').indexOf('module-') >= 0 && ((data && data.moduleKey) !== currentModel)
+        const isKeySharp = zoomNum <= 0.20 * 2
+        const isCardSharp = zoomNum <= 0.05 * 2
+        // alert(isKeySharp)
+        graph.updateItem(node, {
+          selected: nodeId === currentModel,
+          noSelected: node !== currentModel,
+          isNoModule,
+          isKeySharp,
+          isCardSharp,
+          showNameOrLabel
+        })
+      })
 
-        //  const edges = graph.getEdges()
-        //  if(edges.length && currentModel){
-        //     edges.forEach(edge => {
-        //       if (edge.isSys) return
-        //       graph.setItemState(edge, 'active', true )
-        //       // edge.attr('stroke','red')
-        //     })
-        //  }
+      //  const edges = graph.getEdges()
+      //  if(edges.length && currentModel){
+      //     edges.forEach(edge => {
+      //       if (edge.isSys) return
+      //       graph.setItemState(edge, 'active', true )
+      //       // edge.attr('stroke','red')
+      //     })
+      //  }
 
-          // graph.paint()
-      }
+      // graph.paint()
+    }
 
-       }, [currentModel, graph && graph.getZoom(), graph?.getNodes(),showNameOrLabel])
+  }, [currentModel, graph && graph.getZoom(), graph?.getNodes(), showNameOrLabel])
 }
 
 export const ErdPage = (props) => {
@@ -383,52 +404,63 @@ export const ErdPage = (props) => {
     }
   }, [props.width, props.height])
 
-  useEffect(() => { 
-     if(graph && graph.getNodes().length) {
+  const setNodeXY = (nodesDict, node) => {
+    const { id } = node
+
+    if (nodesDict[id]) {
+      node.x = nodesDict[id].x
+      node.y = nodesDict[id].y
+      return true
+    }
+    return false
+  }
+
+  useEffect(() => {
+    if (graph && graph.getNodes().length) {
       // graph.updateLayout({
       //   alphaDecay : 1 - graph.getNodes().length / 20
       //  })
-      if(graph.getNodes().length <= 5)
-      {
-        // alert()
-           graph.updateLayout({
-             alphaDecay :1
-       })
-      }
+      // if(graph.getNodes().length <= 5)
+      // {
+      //   // alert()
+      //      graph.updateLayout({
+      //        alphaDecay :1
+      //  })
+      // }
       graph.fitView(0)
       // alert(111) 
-     }
-    
-    }, [graph?.getNodes().length >= 1])
+    }
 
-    useEffect(()=> {
-      // alert(lockMinZoom)
-      if(graph){
-        //  minZoom: lockMinZoom ? 0.6 : MINZOOM,
-        if(graph.getZoom() < 0.6) {
-          graph.getNodes().filter((a) => !a.isSys).forEach((node) => {
-            node.getContainer().show()
-            graph.updateItem(node, {
-                  isKeySharp: false,
-                  isCardSharp: false ,
-                })
-          })
-          const gwidth = graph.get('width')
-          const gheight = graph.get('height')
-          const point = graph.getCanvasByPoint(gwidth / 2, gheight / 2)
-          // graph.moveTo({x: point.x , y : point.y})
-          graph.zoomTo(0.6, {x: point.x , y : point.y})
-        }
-        graph.setMinZoom(lockMinZoom ? 0.6 : MINZOOM)
-      }
-    } , [lockMinZoom])
-
-
-  useUpdateItem({currentModel : props.currentModel , graph, showNameOrLabel})
+  }, [graph?.getNodes().length >= 1])
 
   useEffect(() => {
-    register({colors: props.colors})
-    const g = render(containerRef.current, props.graph, props, setZoom , lockMinZoom)
+    // alert(lockMinZoom)
+    if (graph) {
+      //  minZoom: lockMinZoom ? 0.6 : MINZOOM,
+      if (graph.getZoom() < 0.6) {
+        graph.getNodes().filter((a) => !a.isSys).forEach((node) => {
+          node.getContainer().show()
+          graph.updateItem(node, {
+            isKeySharp: false,
+            isCardSharp: false,
+          })
+        })
+        const gwidth = graph.get('width')
+        const gheight = graph.get('height')
+        const point = graph.getCanvasByPoint(gwidth / 2, gheight / 2)
+        // graph.moveTo({x: point.x , y : point.y})
+        graph.zoomTo(0.6, { x: point.x, y: point.y })
+      }
+      graph.setMinZoom(lockMinZoom ? 0.6 : MINZOOM)
+    }
+  }, [lockMinZoom])
+
+
+  useUpdateItem({ currentModel: props.currentModel, graph, showNameOrLabel })
+
+  useEffect(() => {
+    register({ colors: props.colors })
+    const g = render(containerRef.current, props.graph, props, setZoom, lockMinZoom)
     setGraph(g) // tslint:disable-next-line: no-unused-expression
 
     props.setGraph && props.setGraph(g)
@@ -446,7 +478,7 @@ export const ErdPage = (props) => {
       const data = props.graph // alert(JSON.stringify(data))
 
       if (data.nodes.length >= 1) {
-        graph.changeData(data)
+
         // graph.refresh()
         // alert()
         // graph.updateLayout({
@@ -458,9 +490,54 @@ export const ErdPage = (props) => {
         //       graph.fitView(0)
         //    }
         // })
-        graph.layout()
-        // alert()
-        // graph.fitView(0)
+        // graph.layout()
+        // const graphString = sessionStorage.getItem('console-erd-graph')
+        // // alert(graphString)
+        // const nodesDict = graphString && JSON.parse(graphString)
+        // data.nodes.forEach((node) => {
+        //   if (nodesDict) {
+        //     setNodeXY(nodesDict, node)
+        //   }
+        // })
+        graph.updateLayout({
+          type: data.nodes.length > 3 ? 'force' : 'circular',
+          condense: true,
+          cols: 3,
+          workerEnabled: true,
+          linkDistance: 0 ,
+          // begin: [ 0, 0 ], 
+          preventOverlap: true,
+          // nodeSpacing: (d) => {
+          //   if (d.id === 'model-SYS-CENTER-POINT') {
+          //     return 500;
+          //   }
+          //   return -150;
+          // },
+
+          // nodeStrength: d => {
+          //   if (d.id === 'model-SYS-CENTER-POINT') {
+          //     return 500;
+          //   }
+          //   return 0;
+          // },
+          onLayoutEnd: () => {
+            graph.fitView(0)
+          }
+        })
+        graph.changeData(data)
+        data.nodes.length > 3 || setTimeout(() => {
+          graph.fitView(0)
+          const zoom = graph.getZoom()
+          graph.findAll('node', (node) => true).map((node) => {
+            // const isKeySharp = zoomNum  <= 0.20 * 2
+            // const isCardSharp =  zoomNum <= 0.05 * 2
+            graph.updateItem(node, {
+              isKeySharp: zoom < 0.4,
+              isCardSharp: zoom <= 0.1,
+            })
+          })
+        }, 500)
+
       } else {
         graph.clear() // graph.fitView(0)
         graph.refresh()
@@ -470,9 +547,9 @@ export const ErdPage = (props) => {
   }, [props.graph])
 
   return (
-     <div className='model-page'>
-    <Toolbar setUpdateId={props.setUpdateId} namespace={props.namespace} zoom={zoom} {...props} graph={graph} currentModel={props.currentModel} toolBarCommands={props.toolBarCommands} />
-    <div id='graph' ref={(ref) => containerRef.current = ref} className='graph' /></div>)
+    <div className='model-page'>
+      <Toolbar setUpdateId={props.setUpdateId} namespace={props.namespace} zoom={zoom} {...props} graph={graph} currentModel={props.currentModel} toolBarCommands={props.toolBarCommands} />
+      <div id='graph' ref={(ref) => containerRef.current = ref} className='graph' /></div>)
 }
 
 const useLocal = () => {
