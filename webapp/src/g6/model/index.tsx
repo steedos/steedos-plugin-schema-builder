@@ -505,14 +505,11 @@ export const ErdPage = (props) => {
           cols: 3,
           workerEnabled: true,
           linkDistance: 0 ,
+          alphaDecay: 0.2 ,
           // begin: [ 0, 0 ], 
           preventOverlap: true,
-          // nodeSpacing: (d) => {
-          //   if (d.id === 'model-SYS-CENTER-POINT') {
-          //     return 500;
-          //   }
-          //   return -150;
-          // },
+          collideStrength: 0.5,
+          nodeSpacing: -180,
 
           // nodeStrength: d => {
           //   if (d.id === 'model-SYS-CENTER-POINT') {
