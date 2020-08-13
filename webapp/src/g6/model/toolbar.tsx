@@ -110,7 +110,7 @@ const BaseCommandList: any[] = [
     graph.findAll('node', (node) => true).map((node) => {
       graph.updateItem(node, {
         isKeySharp: zoom < 0.4,
-        isCardSharp: zoom <= 0.5,
+        isCardSharp: zoom <= 0.1,
       })
     })
 
