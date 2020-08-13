@@ -35,9 +35,9 @@ module.exports = ConsoleWebpack({
       //   // }
       // },
       "*": {
-        target: "http://zyking.xyz:5080",
+        target: "https://schema-builder.trial.steedos.com:8443",
         // target: 'http://30.43.85.42/',
-        secure: false,
+        secure: true,
         changeOrigin: true,
         // cookieDomainRewrite: {
         //   '*': 'localhost' // 把相应的 cookie 域都设置成 localhost，也可以配置成自己电脑的ip，或者指定的域名
