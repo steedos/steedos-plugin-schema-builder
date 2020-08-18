@@ -519,6 +519,16 @@ export const ErdPage = (props) => {
           // },
           onLayoutEnd: () => {
             graph.fitView(0)
+            const zoom = graph.getZoom()
+            graph.findAll('node', (node) => true).map((node) => {
+              // const isKeySharp = zoomNum  <= 0.20 * 2
+              // const isCardSharp =  zoomNum <= 0.05 * 2
+              graph.updateItem(node, {
+                isKeySharp: zoom < 0.4,
+                isCardSharp: zoom <= 0.1,
+              })
+            })
+            setZoom(zoom)
           }
         })
         graph.changeData(data)
@@ -533,6 +543,8 @@ export const ErdPage = (props) => {
               isCardSharp: zoom <= 0.1,
             })
           })
+          // alert(zoom)
+          setZoom(zoom)
         }, 500)
 
       } else {

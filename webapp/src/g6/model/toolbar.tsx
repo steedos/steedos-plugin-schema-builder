@@ -117,39 +117,40 @@ const BaseCommandList: any[] = [
     // toolBarCommand && toolBarCommand('keySharp', { isKeysharp: true})
     update(+new Date())
   },
-}, {
-  title: intl.get('上').d('上'),
-  key: 'up',
-  icon: 'arrow-up',
-  click: (_, graph) => {
-    graph.translate(0, -100)
-    graph.paint()
-  },
-}, {
-  title: intl.get('下').d('下'),
-  key: 'down',
-  icon: 'arrow-down',
-  click: (_, graph) => {
-    graph.translate(0, 100)
-    graph.paint()
-  },
-}, {
-  title: intl.get('左').d('左'),
-  key: 'left',
-  icon: 'arrow-left',
-  click: (_, graph) => {
-    graph.translate(-100, 0)
-    graph.paint()
-  },
-}, {
-  title: intl.get('右').d('右'),
-  key: 'right',
-  icon: 'arrow-right',
-  click: (_, graph) => {
-    graph.translate(100, 0)
-    graph.paint()
-  },
-},
+}, 
+// {
+//   title: intl.get('上').d('上'),
+//   key: 'up',
+//   icon: 'arrow-up',
+//   click: (_, graph) => {
+//     graph.translate(0, -100)
+//     graph.paint()
+//   },
+// }, {
+//   title: intl.get('下').d('下'),
+//   key: 'down',
+//   icon: 'arrow-down',
+//   click: (_, graph) => {
+//     graph.translate(0, 100)
+//     graph.paint()
+//   },
+// }, {
+//   title: intl.get('左').d('左'),
+//   key: 'left',
+//   icon: 'arrow-left',
+//   click: (_, graph) => {
+//     graph.translate(-100, 0)
+//     graph.paint()
+//   },
+// }, {
+//   title: intl.get('右').d('右'),
+//   key: 'right',
+//   icon: 'arrow-right',
+//   click: (_, graph) => {
+//     graph.translate(100, 0)
+//     graph.paint()
+//   },
+// },
  {
   title: intl.get('导出图片').d('导出图片'),
   key: 'export-image',
