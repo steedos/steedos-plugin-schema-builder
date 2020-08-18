@@ -30,6 +30,8 @@
     margin-bottom: 16px;
     height: 100%;
 
+    
+
 
     .console-models-tree {
       overflow: hidden;
@@ -88,9 +90,11 @@
          .ant-tree-node-selected {
             .tree-node-title {
               color: white;
-              background-color: rgba(11,108,149,0.8);
+              background-color: rgba(11,108,149,1);
             }
+            background-color:rgba(11,108,149,1);
          }
+       
         //  div.ant-tree-treenode:hover {
         //   background-color: red;
         // }
