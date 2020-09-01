@@ -1,6 +1,6 @@
 {
     "name": "@steedos/steedos-plugin-schema-builder",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -11,10 +11,15 @@
         "fe-watch": "webpack-dev-server  --watch-poll --config ./webapp/webconfig.config.js --mode development",
         "fe-server": " scp public/schema-builder/** root@$SERVER_IP:/root/docker-yml/steedos/docker-volumes/steedos/public/schema-builder",
         "fe-publish": "npm run fe-build &&  npm run fe-server",
-        "os": "cp -r F:/GitHub/steedos-platform/packages/* node_modules/@steedos/ && cp -r F:/GitHub/steedos-platform/server/* node_modules/steedos-server/"
+        "os": "cp -r F:/GitHub/steedos-platform/packages/* node_modules/@steedos/ && cp -r F:/GitHub/steedos-platform/server/* node_modules/steedos-server/",
+        "pub_next": "npm publish --tag next --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/steedos-plugin-schema-builder"
     },
     "author": "",
     "license": "ISC",
+    "private": false,
+    "publishConfig": {
+        "access": "public"
+    },
     "dependencies": {
     },
     "devDependencies": {
