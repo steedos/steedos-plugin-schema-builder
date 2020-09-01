@@ -1,8 +1,8 @@
 {
-    "name": "steedos-plugin-schema-builder",
+    "name": "@steedos/steedos-plugin-schema-builder",
     "version": "0.0.1",
     "description": "",
-    "main": "server.js",
+    "main": "index.js",
     "scripts": {
         "debug": "nodemon server.js",
         "start": "node server.js",
@@ -16,6 +16,10 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+    },
+    "devDependencies": {
+        "@types/react": "^16.9.22",
+        "@types/react-dom": "^16.8.4",
         "@antv/g6": "^3.6.0",
         "@iarna/rtf-to-html": "^1.1.0",
         "@steedos/accounts": "^1.22.0-alpha.3",
@@ -37,11 +41,7 @@
         "steedos-server": "^1.22.0-alpha.3",
         "unstated-next": "^1.1.0",
         "with-dnd-context": "^1.0.4",
-        "xml2js": "^0.4.23"
-    },
-    "devDependencies": {
-        "@types/react": "^16.9.22",
-        "@types/react-dom": "^16.8.4",
+        "xml2js": "^0.4.23",
         "ak-webpack": "^1.0.9",
         "cross-env": "^7.0.2",
         "nodemon": "^1.19.1",
