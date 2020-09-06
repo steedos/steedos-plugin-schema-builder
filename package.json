@@ -1,8 +1,8 @@
 {
-    "name": "steedos-plugin-schema-builder",
-    "version": "0.0.1",
+    "name": "@steedos/steedos-plugin-schema-builder",
+    "version": "1.0.0",
     "description": "",
-    "main": "server.js",
+    "main": "index.js",
     "scripts": {
         "debug": "nodemon server.js",
         "start": "node server.js",
@@ -11,11 +11,20 @@
         "fe-watch": "webpack-dev-server  --watch-poll --config ./webapp/webconfig.config.js --mode development",
         "fe-server": " scp public/schema-builder/** root@$SERVER_IP:/root/docker-yml/steedos/docker-volumes/steedos/public/schema-builder",
         "fe-publish": "npm run fe-build &&  npm run fe-server",
-        "os": "cp -r F:/GitHub/steedos-platform/packages/* node_modules/@steedos/ && cp -r F:/GitHub/steedos-platform/server/* node_modules/steedos-server/"
+        "os": "cp -r F:/GitHub/steedos-platform/packages/* node_modules/@steedos/ && cp -r F:/GitHub/steedos-platform/server/* node_modules/steedos-server/",
+        "pub_next": "npm publish --tag next --registry https://registry.npmjs.org && start https://npm.taobao.org/sync/@steedos/steedos-plugin-schema-builder"
     },
     "author": "",
     "license": "ISC",
+    "private": false,
+    "publishConfig": {
+        "access": "public"
+    },
     "dependencies": {
+    },
+    "devDependencies": {
+        "@types/react": "^16.9.22",
+        "@types/react-dom": "^16.8.4",
         "@antv/g6": "^3.6.0",
         "@iarna/rtf-to-html": "^1.1.0",
         "@steedos/accounts": "^1.22.0-alpha.3",
@@ -37,11 +46,7 @@
         "steedos-server": "^1.22.0-alpha.3",
         "unstated-next": "^1.1.0",
         "with-dnd-context": "^1.0.4",
-        "xml2js": "^0.4.23"
-    },
-    "devDependencies": {
-        "@types/react": "^16.9.22",
-        "@types/react-dom": "^16.8.4",
+        "xml2js": "^0.4.23",
         "ak-webpack": "^1.0.9",
         "cross-env": "^7.0.2",
         "nodemon": "^1.19.1",
