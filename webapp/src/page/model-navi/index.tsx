@@ -169,7 +169,6 @@ export default forwardRef((props: any, ref) => {
           </div>
           <div className='console-erd-search btns'>
             <Button size="small" type="link" onClick={checkAllFun} >选择所有</Button>
-            {/* <Divider type="vertical" /> */}
             <Button size="small" type="link" onClick={checkAllCancleFun}>清除所有</Button>
             <Button size="small" type="link" onClick={toggleShowNameOrLabel}>显示{!store.showNameOrLabel?'名称':'标签'}</Button>
           </div>

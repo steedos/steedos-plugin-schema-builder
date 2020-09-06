@@ -1069,6 +1069,7 @@ export const register = ({ colors }) => {
           // opacity: 0.85,
           height : height + 10,
           ...cfg.config.styleConfig.default.node,
+          
         },
       })
 

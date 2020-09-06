@@ -14,10 +14,10 @@ const ErdPdmPage =  (props) => {
   const { data, error, loading } = useRequest('/api/v4/objects');
   // alert(JSON.stringify(data))
    const { getModels, getModules } = useMemo(() => ({
-    getModels: async () =>  ({ res: toERDModels(data) }),
-    getModules: async () => ({ res: toModules() }),
-    // getModels: async () =>  ({ res: getAllModelsTest }),
-    // getModules: async () => ({ res: getAllModulesTest }),
+    // getModels: async () =>  ({ res: toERDModels(data) }),
+    // getModules: async () => ({ res: toModules() }),
+    getModels: async () =>  ({ res: getAllModelsTest }),
+    getModules: async () => ({ res: getAllModulesTest }),
    }), [data])
 
    if(error?.message === 'Unauthorized') {

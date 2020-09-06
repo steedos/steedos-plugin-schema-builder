@@ -203,7 +203,9 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
 
     graph.paint()
     graph.setAutoPaint(autoPaint)
-  }) // click
+  }) 
+  
+  // click
 
   graph.on('node:click', (ev) => {
     const {
@@ -499,6 +501,8 @@ export const ErdPage = (props) => {
         //     setNodeXY(nodesDict, node)
         //   }
         // })
+        console.log(data)
+        graph.changeData(data)
         graph.updateLayout({
           type: data.nodes.length > 3 ? 'force' : 'circular',
           condense: true,
@@ -531,21 +535,21 @@ export const ErdPage = (props) => {
             setZoom(zoom)
           }
         })
-        graph.changeData(data)
-        data.nodes.length > 3 || setTimeout(() => {
-          graph.fitView(0)
-          const zoom = graph.getZoom()
-          graph.findAll('node', (node) => true).map((node) => {
-            // const isKeySharp = zoomNum  <= 0.20 * 2
-            // const isCardSharp =  zoomNum <= 0.05 * 2
-            graph.updateItem(node, {
-              isKeySharp: zoom < 0.4,
-              isCardSharp: zoom <= 0.1,
-            })
-          })
-          // alert(zoom)
-          setZoom(zoom)
-        }, 500)
+       
+        // data.nodes.length > 3 || setTimeout(() => {
+        //   graph.fitView(0)
+        //   const zoom = graph.getZoom()
+        //   graph.findAll('node', (node) => true).map((node) => {
+        //     // const isKeySharp = zoomNum  <= 0.20 * 2
+        //     // const isCardSharp =  zoomNum <= 0.05 * 2
+        //     graph.updateItem(node, {
+        //       isKeySharp: zoom < 0.4,
+        //       isCardSharp: zoom <= 0.1,
+        //     })
+        //   })
+        //   // alert(zoom)
+        //   setZoom(zoom)
+        // }, 500)
 
       } else {
         graph.clear() // graph.fitView(0)
