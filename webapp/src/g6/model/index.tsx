@@ -90,7 +90,7 @@ export const render = (container, data, props, setZoom, lockMinZoom) => {
         },
         {
           type: 'activate-relations',
-          resetSelected: true,
+          // resetSelected: true,
           trigger: 'click'
         },
       ],

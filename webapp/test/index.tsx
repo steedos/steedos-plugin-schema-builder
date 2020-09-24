@@ -3,8 +3,8 @@ import React, { useMemo, useCallback } from 'react'
 import { useRequest } from 'ahooks';
 import { Skeleton, message } from 'antd'
 import Page , { DvaModel } from '../src'
-import getAllModelsTest from './g6-test/mock/model-test'
-import getAllModulesTest from './g6-test/mock/module-test'
+// import getAllModelsTest from './g6-test/mock/model-test'
+// import getAllModulesTest from './g6-test/mock/module-test'
 import { toModules, toERDModels  } from './g6-test/mock/steedos-test'
 
 
@@ -14,10 +14,10 @@ const ErdPdmPage =  (props) => {
   const { data, error, loading } = useRequest('/api/v4/objects');
   // alert(JSON.stringify(data))
    const { getModels, getModules } = useMemo(() => ({
-    // getModels: async () =>  ({ res: toERDModels(data) }),
-    // getModules: async () => ({ res: toModules() }),
-    getModels: async () =>  ({ res: getAllModelsTest }),
-    getModules: async () => ({ res: getAllModulesTest }),
+    getModels: async () =>  ({ res: toERDModels(data) }),
+    getModules: async () => ({ res: toModules() }),
+    // getModels: async () =>  ({ res: getAllModelsTest }),
+    // getModules: async () => ({ res: getAllModulesTest }),
    }), [data])
 
    if(error?.message === 'Unauthorized') {
