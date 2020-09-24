@@ -7,7 +7,7 @@ const moduleName = 'schema-builder'
 module.exports = ConsoleWebpack({
   output: {
     path: path.join(process.cwd(), '/public/'+ moduleName),
-    publicPath: '/'+ moduleName,
+    publicPath: './',
     
   },
   devServer: {
