@@ -11,7 +11,13 @@ import { toModules, toERDModels  } from './g6-test/mock/steedos-test'
 import init from  './unstated'
 
 const ErdPdmPage =  (props) => {
-  const { data, error, loading } = useRequest('/api/v4/objects');
+  var href = new URL(window.location.href);
+  var foo = href.pathname.split('/schema-builder');
+  var ROOT_URL_PATH_PREFIX = '';
+  if(foo.length > 1){
+      ROOT_URL_PATH_PREFIX = foo[0];
+  }
+  const { data, error, loading } = useRequest(ROOT_URL_PATH_PREFIX+'/api/v4/objects');
   // alert(JSON.stringify(data))
    const { getModels, getModules } = useMemo(() => ({
     getModels: async () =>  ({ res: toERDModels(data) }),
@@ -23,14 +29,14 @@ const ErdPdmPage =  (props) => {
    if(error?.message === 'Unauthorized') {
     //  alert(window.location.href)
      message.error('请登录');
-     window.location.href = '/accounts/a/#/login?redirect_uri='+ encodeURI(window.location.href)
+     window.location.href = ROOT_URL_PATH_PREFIX+'/accounts/a/#/login?redirect_uri='+ encodeURI(window.location.href)
    } else {
      if(error)  message.error(error.message);
    }
 
 
    const openModelFun = useCallback((args)=>{
-     window.open(`/app/admin/objects/view/${args.model}`,'model')
+     window.open(`${ROOT_URL_PATH_PREFIX}/app/admin/objects/view/${args.model}`,'model')
    } , [])
     
   if(!data) return <Skeleton avatar active paragraph={{ rows: 20 }} >{error?.message}</Skeleton>

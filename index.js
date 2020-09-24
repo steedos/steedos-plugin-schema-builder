@@ -8,10 +8,10 @@ exports.init = function () {
         const router = express.Router()
         const cacheTime = 1000 * 60 * 60 * 24; 
         let routerPath = "/schema-builder"
-        if (__meteor_runtime_config__ && __meteor_runtime_config__.ROOT_URL_PATH_PREFIX)
-            routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + routerPath;
-            app.use('/schema-builder', express.static(publicPath, { maxAge: cacheTime }))
-            WebApp.rawConnectHandlers.use(app);
+        // if (__meteor_runtime_config__ && __meteor_runtime_config__.ROOT_URL_PATH_PREFIX)
+        //     routerPath = __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + routerPath;
+        //     app.use('/schema-builder', express.static(publicPath, { maxAge: cacheTime }))
+        //     WebApp.rawConnectHandlers.use(app);
         router.use(routerPath, express.static(publicPath, { maxAge: cacheTime }));
         WebApp.rawConnectHandlers.use(router);
     }
