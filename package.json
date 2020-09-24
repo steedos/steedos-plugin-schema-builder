@@ -1,6 +1,6 @@
 {
     "name": "@steedos/steedos-plugin-schema-builder",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -27,7 +27,7 @@
         "@types/react-dom": "^16.8.4",
         "@antv/g6": "^3.6.0",
         "@iarna/rtf-to-html": "^1.1.0",
-        "@steedos/accounts": "^1.22.0-alpha.3",
+        "@steedos/accounts": "^1.22.0-alpha.9",
         "@steedos/steedos-plugin-workflow": "^2.0.8",
         "ahooks": "^2.4.0",
         "antd": "^4.3.5",

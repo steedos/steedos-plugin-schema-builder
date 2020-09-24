@@ -980,10 +980,10 @@
   dependencies:
     tslib "^1.10.0"
 
-"@steedos/accounts@^1.22.0-alpha.3":
-  version "1.22.0-alpha.3"
-  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.22.0-alpha.3.tgz?cache=0&sync_timestamp=1597238018317&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40steedos%2Faccounts%2Fdownload%2F%40steedos%2Faccounts-1.22.0-alpha.3.tgz#2987a0f121411dd68945836aff295e7ce5d7114e"
-  integrity sha1-KYeg8SFBHdaJRYNq/ylefOXXEU4=
+"@steedos/accounts@^1.22.0-alpha.9":
+  version "1.22.0-alpha.9"
+  resolved "https://registry.npm.taobao.org/@steedos/accounts/download/@steedos/accounts-1.22.0-alpha.9.tgz#16209630dd806b29be2aa29c20cfde099ebbc1f7"
+  integrity sha1-FiCWMN2Aaym+KqKcIM/eCZ67wfc=
   dependencies:
     "@accounts/mongo" "^0.19.0"
     "@accounts/rest-express" "^0.19.0"
@@ -993,7 +993,8 @@
     app-root-path "^2.2.1"
     bcryptjs "^2.4.3"
     body-parser "1.19.0"
-    cookies "^0.7.3"
+    chalk "^2.4.2"
+    cookies "^0.8.0"
     cors "2.8.5"
     crypto "^1.0.1"
     express "4.17.1"
@@ -3500,6 +3501,14 @@ cookies@^0.7.3:
   dependencies:
     depd "~1.1.2"
     keygrip "~1.0.3"
+
+cookies@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.npm.taobao.org/cookies/download/cookies-0.8.0.tgz#1293ce4b391740a8406e3c9870e828c4b54f3f90"
+  integrity sha1-EpPOSzkXQKhAbjyYcOgoxLVPP5A=
+  dependencies:
+    depd "~2.0.0"
+    keygrip "~1.1.0"
 
 copy-concurrently@^1.0.0:
   version "1.0.5"
@@ -6527,6 +6536,13 @@ keygrip@~1.0.0, keygrip@~1.0.1, keygrip@~1.0.3:
   version "1.0.3"
   resolved "https://registry.npm.taobao.org/keygrip/download/keygrip-1.0.3.tgz#399d709f0aed2bab0a059e0cdd3a5023a053e1dc"
   integrity sha1-OZ1wnwrtK6sKBZ4M3TpQI6BT4dw=
+
+keygrip@~1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/keygrip/download/keygrip-1.1.0.tgz#871b1681d5e159c62a445b0c74b615e0917e7226"
+  integrity sha1-hxsWgdXhWcYqRFsMdLYV4JF+ciY=
+  dependencies:
+    tsscmp "1.0.6"
 
 killable@^1.0.1:
   version "1.0.1"
@@ -11234,6 +11250,11 @@ tslint@^5.18.0:
     semver "^5.3.0"
     tslib "^1.8.0"
     tsutils "^2.29.0"
+
+tsscmp@1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npm.taobao.org/tsscmp/download/tsscmp-1.0.6.tgz#85b99583ac3589ec4bfef825b5000aa911d605eb"
+  integrity sha1-hbmVg6w1iexL/vgltQAKqRHWBes=
 
 "tsutils@^2.27.2 <2.29.0":
   version "2.28.0"
