@@ -17,7 +17,7 @@ const ErdPdmPage =  (props) => {
   if(foo.length > 1){
       ROOT_URL_PATH_PREFIX = foo[0];
   }
-  const { data, error, loading } = useRequest(ROOT_URL_PATH_PREFIX+'/api/v4/objects');
+  const { data, error, loading } = useRequest(ROOT_URL_PATH_PREFIX+'/api/v4/objects/schema/erd');
   // alert(JSON.stringify(data))
    const { getModels, getModules } = useMemo(() => ({
     getModels: async () =>  ({ res: toERDModels(data) }),
