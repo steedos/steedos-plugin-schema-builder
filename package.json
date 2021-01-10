@@ -1,6 +1,6 @@
 {
     "name": "@steedos/steedos-plugin-schema-builder",
-    "version": "1.0.4",
+    "version": "1.23.0-alpha.15",
     "description": "",
     "main": "index.js",
     "scripts": {
